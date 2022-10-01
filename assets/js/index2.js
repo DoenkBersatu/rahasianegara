@@ -105,7 +105,7 @@ var options = {
         data: [0, 160, 671, 414, 555, 414, 555, 257, 300, 0]
     }],
     chart: {
-        type: "area",
+        type: "bar",
         //width: 130,
         height: 70,
         toolbar: {
@@ -201,7 +201,7 @@ var options = {
         data: [0, 160, 671, 414, 555, 414, 555, 257, 300, 0]
     }],
     chart: {
-        type: "area",
+        type: "bar",
         //width: 130,
         height: 70,
         toolbar: {

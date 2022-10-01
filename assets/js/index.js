@@ -1,5 +1,5 @@
 $(function() {
-
+ 
 
       // chart1
       var ctx = document.getElementById('chart1').getContext('2d');
@@ -34,15 +34,15 @@ $(function() {
     
 
 
-    // chart2
-    var ctx = document.getElementById('chart2').getContext('2d');
+        // chart2
+    var ctx = document.getElementById('chart2v1').getContext('2d');
     var myChart = new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+            labels: ['2020', '2021', '2022'],
             datasets: [{
                 label: 'Orders',
-                data: [12, 19, 13, 15, 20, 10],
+                data: [12, 19, 13],
                 backgroundColor: [
                     '#923eb9'
                 ],
@@ -53,7 +53,60 @@ $(function() {
             },
             {
                 label: 'Visits',
-                data: [7, 15, 9, 12, 17, 16],
+                data: [7, 15, 9],
+                backgroundColor: [
+                    'rgb(146 62 185 / 32%)'
+                ],
+                borderColor: [
+                    'rgb(146 62 185 / 32%)'
+                ],
+                borderWidth: 0
+            }]
+        },
+        options: {
+            maintainAspectRatio: false,
+            barPercentage: 0.3,
+            //categoryPercentage: 0.5,
+            plugins: {
+                legend: {
+                    display: false,
+                }
+            },
+            scales: {
+                x: {
+                  stacked: true,
+                  beginAtZero: true
+                },
+                y: {
+                  stacked: true,
+                  beginAtZero: true
+                }
+              }
+        }
+    });
+
+
+
+    // chart2
+    var ctx = document.getElementById('chart2').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['2020', '2021', '2022'],
+            datasets: [{
+                label: 'Orders',
+                data: [12, 19, 13],
+                backgroundColor: [
+                    '#923eb9'
+                ],
+                borderColor: [
+                    '#923eb9'
+                ],
+                borderWidth: 0
+            },
+            {
+                label: 'Visits',
+                data: [7, 15, 9],
                 backgroundColor: [
                     'rgb(146 62 185 / 32%)'
                 ],

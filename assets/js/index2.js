@@ -287,91 +287,415 @@ var options = {
   var chart = new ApexCharts(document.querySelector("#chart3"), options);
   chart.render();
 
+// charttw1
+var ctx = document.getElementById('charttw1').getContext('2d');
 
+var gradientStroke1 = ctx.createLinearGradient(0, 0, 0, 300);
+    gradientStroke1.addColorStop(0, '#009efd');
+    gradientStroke1.addColorStop(1, '#2af598');
+
+var gradientStroke2 = ctx.createLinearGradient(0, 0, 0, 300);
+    gradientStroke2.addColorStop(0, '#7928ca');  
+    gradientStroke2.addColorStop(1, '#ff0080'); 
+
+var gradientStroke3 = ctx.createLinearGradient(0, 0, 0, 300);
+    gradientStroke3.addColorStop(0, '#ff8359');
+    gradientStroke3.addColorStop(1, '#ffdf40');
+
+
+var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ['2020', '2021', '2022'],
+        datasets: [{
+            label: 'NIB',
+            data: [15, 22, 100],
+            backgroundColor: [
+                gradientStroke1
+            ],
+            borderColor: [
+                gradientStroke1
+            ],
+            borderWidth: 0,
+            borderRadius: 20
+        },
+        {
+            label: 'PMA',
+            data: [20, 35, 30],
+            backgroundColor: [
+                gradientStroke1
+            ],
+            borderColor: [
+                gradientStroke1
+            ],
+            borderWidth: 0,
+            borderRadius: 20
+        },{
+            label: 'PMDN',
+            data: [10, 15, 9],
+            backgroundColor: [
+                gradientStroke1
+            ],
+            borderColor: [
+                gradientStroke1
+            ],
+            borderWidth: 0,
+            borderRadius: 20
+        }]
+    },
+    options: {
+        maintainAspectRatio: false,
+        barPercentage: 0.9,
+        categoryPercentage: 0.4,
+        plugins: {
+            legend: {
+                maxWidth: 20,
+                boxHeight: 20,
+                position:'bottom',
+                display: false,
+            }
+        },
+        scales: {
+            x: {
+              stacked: false,
+              beginAtZero: true
+            },
+            y: {
+              stacked: false,
+              beginAtZero: true
+            }
+          }
+    }
+});
+
+// charttw2
+var ctx = document.getElementById('charttw2').getContext('2d');
+
+var gradientStroke1 = ctx.createLinearGradient(0, 0, 0, 300);
+    gradientStroke1.addColorStop(0, '#009efd');
+    gradientStroke1.addColorStop(1, '#2af598');
+
+var gradientStroke2 = ctx.createLinearGradient(0, 0, 0, 300);
+    gradientStroke2.addColorStop(0, '#7928ca');  
+    gradientStroke2.addColorStop(1, '#ff0080'); 
+
+var gradientStroke3 = ctx.createLinearGradient(0, 0, 0, 300);
+    gradientStroke3.addColorStop(0, '#ff8359');
+    gradientStroke3.addColorStop(1, '#ffdf40');
+
+
+var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ['2020', '2021', '2022'],
+        datasets: [{
+            label: 'NIB',
+            data: [22, 100, 15],
+            backgroundColor: [
+                gradientStroke2
+            ],
+            borderColor: [
+                gradientStroke2
+            ],
+            borderWidth: 0,
+            borderRadius: 20
+        },
+        {
+            label: 'PMA',
+            data: [35, 30, 35],
+            backgroundColor: [
+                gradientStroke2
+            ],
+            borderColor: [
+                gradientStroke2
+            ],
+            borderWidth: 0,
+            borderRadius: 20
+        },{
+            label: 'PMDN',
+            data: [15, 9, 12],
+            backgroundColor: [
+                gradientStroke2
+            ],
+            borderColor: [
+                gradientStroke2
+            ],
+            borderWidth: 0,
+            borderRadius: 20
+        }]
+    },
+    options: {
+        maintainAspectRatio: false,
+        barPercentage: 0.9,
+        categoryPercentage: 0.4,
+        plugins: {
+            legend: {
+                maxWidth: 20,
+                boxHeight: 20,
+                position:'bottom',
+                display: false,
+            }
+        },
+        scales: {
+            x: {
+              stacked: false,
+              beginAtZero: true
+            },
+            y: {
+              stacked: false,
+              beginAtZero: true
+            }
+          }
+    }
+});
+
+// charttw3
+var ctx = document.getElementById('charttw3').getContext('2d');
+
+var gradientStroke1 = ctx.createLinearGradient(0, 0, 0, 300);
+    gradientStroke1.addColorStop(0, '#009efd');
+    gradientStroke1.addColorStop(1, '#2af598');
+
+var gradientStroke2 = ctx.createLinearGradient(0, 0, 0, 300);
+    gradientStroke2.addColorStop(0, '#7928ca');  
+    gradientStroke2.addColorStop(1, '#ff0080'); 
+
+var gradientStroke3 = ctx.createLinearGradient(0, 0, 0, 300);
+    gradientStroke3.addColorStop(0, '#ff8359');
+    gradientStroke3.addColorStop(1, '#ffdf40');
+
+
+var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ['2020', '2021', '2022'],
+        datasets: [{
+            label: 'NIB',
+            data: [15, 22, 15],
+            backgroundColor: [
+                gradientStroke3
+            ],
+            borderColor: [
+                gradientStroke3
+            ],
+            borderWidth: 0,
+            borderRadius: 20
+        },
+        {
+            label: 'PMA',
+            data: [20, 35, 35],
+            backgroundColor: [
+                gradientStroke3
+            ],
+            borderColor: [
+                gradientStroke3
+            ],
+            borderWidth: 0,
+            borderRadius: 20
+        },{
+            label: 'PMDN',
+            data: [10, 15, 12],
+            backgroundColor: [
+                gradientStroke3
+            ],
+            borderColor: [
+                gradientStroke3
+            ],
+            borderWidth: 0,
+            borderRadius: 20
+        }]
+    },
+    options: {
+        maintainAspectRatio: false,
+        barPercentage: 0.9,
+        categoryPercentage: 0.4,
+        plugins: {
+            legend: {
+                maxWidth: 20,
+                boxHeight: 20,
+                position:'bottom',
+                display: false,
+            }
+        },
+        scales: {
+            x: {
+              stacked: false,
+              beginAtZero: true
+            },
+            y: {
+              stacked: false,
+              beginAtZero: true
+            }
+          }
+    }
+});
+
+// charttw4
+var ctx = document.getElementById('charttw4').getContext('2d');
+
+var gradientStroke1 = ctx.createLinearGradient(0, 0, 0, 300);
+    gradientStroke1.addColorStop(0, '#009efd');
+    gradientStroke1.addColorStop(1, '#2af598');
+
+var gradientStroke2 = ctx.createLinearGradient(0, 0, 0, 300);
+    gradientStroke2.addColorStop(0, '#7928ca');  
+    gradientStroke2.addColorStop(1, '#ff0080'); 
+
+var gradientStroke3 = ctx.createLinearGradient(0, 0, 0, 300);
+    gradientStroke3.addColorStop(0, '#ff8359');
+    gradientStroke3.addColorStop(1, '#ffdf40');
+
+var gradientStroke4 = ctx.createLinearGradient(0, 0, 0, 300);
+    gradientStroke4.addColorStop(0, '#483D8B');
+    gradientStroke4.addColorStop(1, '#00CED1');
+
+
+var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ['2020', '2021', '2022'],
+        datasets: [{
+            label: 'NIB',
+            data: [15, 100, 15],
+            backgroundColor: [
+                gradientStroke4
+            ],
+            borderColor: [
+                gradientStroke4
+            ],
+            borderWidth: 0,
+            borderRadius: 20
+        },
+        {
+            label: 'PMA',
+            data: [20, 30, 35],
+            backgroundColor: [
+                gradientStroke4
+            ],
+            borderColor: [
+                gradientStroke4
+            ],
+            borderWidth: 0,
+            borderRadius: 20
+        },{
+            label: 'PMDN',
+            data: [10, 9, 12],
+            backgroundColor: [
+                gradientStroke4
+            ],
+            borderColor: [
+                gradientStroke4
+            ],
+            borderWidth: 0,
+            borderRadius: 20
+        }]
+    },
+    options: {
+        maintainAspectRatio: false,
+        barPercentage: 0.9,
+        categoryPercentage: 0.4,
+        plugins: {
+            legend: {
+                maxWidth: 20,
+                boxHeight: 20,
+                position:'bottom',
+                display: true,
+            }
+        },
+        scales: {
+            x: {
+              stacked: false,
+              beginAtZero: true
+            },
+            y: {
+              stacked: false,
+              beginAtZero: true
+            }
+          }
+    }
+});
 
 
   // chart4
-    var ctx = document.getElementById('chart4').getContext('2d');
+  var ctx = document.getElementById('chart4').getContext('2d');
 
-    var gradientStroke1 = ctx.createLinearGradient(0, 0, 0, 300);
-        gradientStroke1.addColorStop(0, '#009efd');
-        gradientStroke1.addColorStop(1, '#2af598');
+  var gradientStroke1 = ctx.createLinearGradient(0, 0, 0, 300);
+      gradientStroke1.addColorStop(0, '#009efd');
+      gradientStroke1.addColorStop(1, '#2af598');
 
-    var gradientStroke2 = ctx.createLinearGradient(0, 0, 0, 300);
-        gradientStroke2.addColorStop(0, '#7928ca');  
-        gradientStroke2.addColorStop(1, '#ff0080'); 
+  var gradientStroke2 = ctx.createLinearGradient(0, 0, 0, 300);
+      gradientStroke2.addColorStop(0, '#7928ca');  
+      gradientStroke2.addColorStop(1, '#ff0080'); 
 
-    var gradientStroke3 = ctx.createLinearGradient(0, 0, 0, 300);
-        gradientStroke3.addColorStop(0, '#ff8359');
-        gradientStroke3.addColorStop(1, '#ffdf40');
+  var gradientStroke3 = ctx.createLinearGradient(0, 0, 0, 300);
+      gradientStroke3.addColorStop(0, '#ff8359');
+      gradientStroke3.addColorStop(1, '#ffdf40');
 
 
-    var myChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
-            datasets: [{
-                label: 'Avg. Session',
-                data: [15, 22, 100, 15, 20, 10, 15],
-                backgroundColor: [
-                    gradientStroke1
-                ],
-                borderColor: [
-                    gradientStroke1
-                ],
-                borderWidth: 0,
-                borderRadius: 20
-            },
-            {
-                label: 'Conversion. Rate',
-                data: [20, 35, 30, 35, 28, 22, 25],
-                backgroundColor: [
-                    gradientStroke2
-                ],
-                borderColor: [
-                    gradientStroke2
-                ],
-                borderWidth: 0,
-                borderRadius: 20
-            },{
-                label: 'Avg. Session Duration',
-                data: [10, 15, 9, 12, 17, 16, 10],
-                backgroundColor: [
-                    gradientStroke3
-                ],
-                borderColor: [
-                    gradientStroke3
-                ],
-                borderWidth: 0,
-                borderRadius: 20
-            }]
-        },
-        options: {
-            maintainAspectRatio: false,
-            barPercentage: 0.9,
-            categoryPercentage: 0.4,
-            plugins: {
-                legend: {
-                    maxWidth: 20,
-                    boxHeight: 20,
-                    position:'bottom',
-                    display: true,
-                }
-            },
-            scales: {
-                x: {
-                  stacked: false,
-                  beginAtZero: true
-                },
-                y: {
-                  stacked: false,
-                  beginAtZero: true
-                }
+  var myChart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+          labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+          datasets: [{
+              label: 'Avg. Session',
+              data: [15, 22, 100, 15, 20, 10, 15],
+              backgroundColor: [
+                  gradientStroke1
+              ],
+              borderColor: [
+                  gradientStroke1
+              ],
+              borderWidth: 0,
+              borderRadius: 20
+          },
+          {
+              label: 'Conversion. Rate',
+              data: [20, 35, 30, 35, 28, 22, 25],
+              backgroundColor: [
+                  gradientStroke2
+              ],
+              borderColor: [
+                  gradientStroke2
+              ],
+              borderWidth: 0,
+              borderRadius: 20
+          },{
+              label: 'Avg. Session Duration',
+              data: [10, 15, 9, 12, 17, 16, 10],
+              backgroundColor: [
+                  gradientStroke3
+              ],
+              borderColor: [
+                  gradientStroke3
+              ],
+              borderWidth: 0,
+              borderRadius: 20
+          }]
+      },
+      options: {
+          maintainAspectRatio: false,
+          barPercentage: 0.9,
+          categoryPercentage: 0.4,
+          plugins: {
+              legend: {
+                  maxWidth: 20,
+                  boxHeight: 20,
+                  position:'bottom',
+                  display: true,
               }
-        }
-    });
- 
-
+          },
+          scales: {
+              x: {
+                stacked: false,
+                beginAtZero: true
+              },
+              y: {
+                stacked: false,
+                beginAtZero: true
+              }
+            }
+      }
+  });
 
 // chart5
 var ctx = document.getElementById('chart5').getContext('2d');

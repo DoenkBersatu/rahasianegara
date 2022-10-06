@@ -362,7 +362,6 @@ var myChart = new Chart(ctx, {
     data: {
         labels: ['2020', '2021', '2022'],
         datasets: [{
-            label: 'NIB',
             data: [15, tw121, 100],
             backgroundColor: [
                 gradientStroke1
@@ -374,7 +373,6 @@ var myChart = new Chart(ctx, {
             borderRadius: 20
         },
         {
-            label: 'PMA',
             data: [20, 35, 30],
             backgroundColor: [
                 gradientStroke1
@@ -385,7 +383,6 @@ var myChart = new Chart(ctx, {
             borderWidth: 0,
             borderRadius: 20
         },{
-            label: 'PMDN',
             data: [10, 15, 9],
             backgroundColor: [
                 gradientStroke1
@@ -443,7 +440,6 @@ var myChart = new Chart(ctx, {
     data: {
         labels: ['2020', '2021', '2022'],
         datasets: [{
-            label: 'NIB',
             data: [22, tw221, 15],
             backgroundColor: [
                 gradientStroke2
@@ -455,7 +451,6 @@ var myChart = new Chart(ctx, {
             borderRadius: 20
         },
         {
-            label: 'PMA',
             data: [35, 30, 35],
             backgroundColor: [
                 gradientStroke2
@@ -466,7 +461,6 @@ var myChart = new Chart(ctx, {
             borderWidth: 0,
             borderRadius: 20
         },{
-            label: 'PMDN',
             data: [15, 9, 12],
             backgroundColor: [
                 gradientStroke2
@@ -524,7 +518,6 @@ var myChart = new Chart(ctx, {
     data: {
         labels: ['2020', '2021', '2022'],
         datasets: [{
-            label: 'NIB',
             data: [15, tw321, 15],
             backgroundColor: [
                 gradientStroke3
@@ -536,7 +529,6 @@ var myChart = new Chart(ctx, {
             borderRadius: 20
         },
         {
-            label: 'PMA',
             data: [20, 35, 35],
             backgroundColor: [
                 gradientStroke3
@@ -547,7 +539,6 @@ var myChart = new Chart(ctx, {
             borderWidth: 0,
             borderRadius: 20
         },{
-            label: 'PMDN',
             data: [10, 15, 12],
             backgroundColor: [
                 gradientStroke3
@@ -609,7 +600,6 @@ var myChart = new Chart(ctx, {
     data: {
         labels: ['2020', '2021', '2022'],
         datasets: [{
-            label: 'NIB',
             data: [15, tw421, 15],
             backgroundColor: [
                 gradientStroke4
@@ -621,7 +611,6 @@ var myChart = new Chart(ctx, {
             borderRadius: 20
         },
         {
-            label: 'PMA',
             data: [20, 30, 35],
             backgroundColor: [
                 gradientStroke4
@@ -632,7 +621,6 @@ var myChart = new Chart(ctx, {
             borderWidth: 0,
             borderRadius: 20
         },{
-            label: 'PMDN',
             data: [10, 9, 12],
             backgroundColor: [
                 gradientStroke4

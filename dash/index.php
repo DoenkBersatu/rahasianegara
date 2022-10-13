@@ -371,27 +371,6 @@ var myChart = new Chart(ctx, {
             ],
             borderWidth: 0,
             borderRadius: 20
-        },
-        {
-            data: [20, 35, 30],
-            backgroundColor: [
-                gradientStroke1
-            ],
-            borderColor: [
-                gradientStroke1
-            ],
-            borderWidth: 0,
-            borderRadius: 20
-        },{
-            data: [10, 15, 9],
-            backgroundColor: [
-                gradientStroke1
-            ],
-            borderColor: [
-                gradientStroke1
-            ],
-            borderWidth: 0,
-            borderRadius: 20
         }]
     },
     options: {
@@ -449,27 +428,6 @@ var myChart = new Chart(ctx, {
             ],
             borderWidth: 0,
             borderRadius: 20
-        },
-        {
-            data: [35, 30, 35],
-            backgroundColor: [
-                gradientStroke2
-            ],
-            borderColor: [
-                gradientStroke2
-            ],
-            borderWidth: 0,
-            borderRadius: 20
-        },{
-            data: [15, 9, 12],
-            backgroundColor: [
-                gradientStroke2
-            ],
-            borderColor: [
-                gradientStroke2
-            ],
-            borderWidth: 0,
-            borderRadius: 20
         }]
     },
     options: {
@@ -519,27 +477,6 @@ var myChart = new Chart(ctx, {
         labels: ['2020', '2021', '2022'],
         datasets: [{
             data: [15, tw321, 15],
-            backgroundColor: [
-                gradientStroke3
-            ],
-            borderColor: [
-                gradientStroke3
-            ],
-            borderWidth: 0,
-            borderRadius: 20
-        },
-        {
-            data: [20, 35, 35],
-            backgroundColor: [
-                gradientStroke3
-            ],
-            borderColor: [
-                gradientStroke3
-            ],
-            borderWidth: 0,
-            borderRadius: 20
-        },{
-            data: [10, 15, 12],
             backgroundColor: [
                 gradientStroke3
             ],
@@ -609,27 +546,6 @@ var myChart = new Chart(ctx, {
             ],
             borderWidth: 0,
             borderRadius: 20
-        },
-        {
-            data: [20, 30, 35],
-            backgroundColor: [
-                gradientStroke4
-            ],
-            borderColor: [
-                gradientStroke4
-            ],
-            borderWidth: 0,
-            borderRadius: 20
-        },{
-            data: [10, 9, 12],
-            backgroundColor: [
-                gradientStroke4
-            ],
-            borderColor: [
-                gradientStroke4
-            ],
-            borderWidth: 0,
-            borderRadius: 20
         }]
     },
     options: {
@@ -641,7 +557,7 @@ var myChart = new Chart(ctx, {
                 maxWidth: 20,
                 boxHeight: 20,
                 position:'bottom',
-                display: true,
+                display: false,
             }
         },
         scales: {

@@ -35,24 +35,26 @@ include "koneksi.php"
 
 <body>
     <div class="container">
-<<<<<<< HEAD
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="#">DASHBOARD</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-          <div class="navbar-nav ms-auto">
-            <a class="nav-link active" aria-current="page" href="#">Home</a>
-            <a class="nav-link" href="#">Izin</a>
-            <a class="nav-link" href="#">Investasi</a>
-            <a class="nav-link btn btn-primary text-white" href="../../admindashboard">Login</a>
-          </div>
-        </div>
-      </div>
-    </nav>
-  </div>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">DASHBOARD</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                    <div class="navbar-nav ms-auto">
+                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                        <a class="nav-link" href="#">Izin</a>
+                        <a class="nav-link" href="#">Investasi</a>
+                        <a class="nav-link btn btn-primary text-white" href="login.html">Login</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </div>
+
     <!--start wrapper-->
     <div class="wrapper">
         <div class="container">
@@ -354,39 +356,27 @@ include "koneksi.php"
     </div>
     <!--end wrapper-->
 
-<<<<<<< HEAD
-  <?php 
-
-$datatw120 = $koneksi->query("select * from data where triwulan = 'Triwulan 1' and tahun='2020'");
-$tw120 = array();
-while($fetch120 = $datatw120->fetch_assoc()) {
-    $tw120[] = $fetch120;
-}
-    $datatw121 = $koneksi->query("select * from data where triwulan = 'Triwulan 1' and tahun='2021'");
-=======
     <?php 
     $datatw121 = $koneksi->query("select * from data where triwulan = 'Triwulan 1'");
->>>>>>> 7b7c0c8c30a80a8c33947ac28a0287cc755ba33c
     $tw121 = array();
     while($fetch121 = $datatw121->fetch_assoc()) {
         $tw121[] = $fetch121;
     }
-    $datatw221 = $koneksi->query("select * from data where triwulan = 'Triwulan 2' and tahun='2021'");
+    $datatw221 = $koneksi->query("select * from data where triwulan = 'Triwulan 2'");
     $tw221 = array();
     while($fetch221 = $datatw221->fetch_assoc()) {
         $tw221[] = $fetch221;
     }
-    $datatw321 = $koneksi->query("select * from data where triwulan = 'Triwulan 3'and tahun='2021'");
+    $datatw321 = $koneksi->query("select * from data where triwulan = 'Triwulan 3'");
     $tw321 = array();
     while($fetch321 = $datatw321->fetch_assoc()) {
         $tw321[] = $fetch321;
     }
-    $datatw421 = $koneksi->query("select * from data where triwulan = 'Triwulan 4'and tahun='2021'");
+    $datatw421 = $koneksi->query("select * from data where triwulan = 'Triwulan 4'");
     $tw421 = array();
     while($fetch421 = $datatw421->fetch_assoc()) {
         $tw421[] = $fetch421;
     }
-    $tw120 = $tw120[0];
     $tw121 = $tw121[0];
     $tw221 = $tw221[0];
     $tw321 = $tw321[0];
@@ -407,11 +397,6 @@ while($fetch120 = $datatw120->fetch_assoc()) {
     <script src="../assets/js/main.js"></script>
 
     <script>
-<<<<<<< HEAD
-
-    var tw120 = <?php echo json_encode($tw120['total'], JSON_HEX_TAG); ?>;
-=======
->>>>>>> 7b7c0c8c30a80a8c33947ac28a0287cc755ba33c
     var tw121 = <?php echo json_encode($tw121['total'], JSON_HEX_TAG); ?>;
     var tw221 = <?php echo json_encode($tw221['total'], JSON_HEX_TAG); ?>;
     var tw321 = <?php echo json_encode($tw321['total'], JSON_HEX_TAG); ?>;
@@ -432,35 +417,6 @@ while($fetch120 = $datatw120->fetch_assoc()) {
     gradientStroke3.addColorStop(1, '#ffdf40');
 
 
-<<<<<<< HEAD
-var myChart = new Chart(ctx, {
-    type: 'bar',
-    data: {
-        labels: ['2020', '2021', '2022'],
-        datasets: [{
-            data: [tw120, tw121, 100],
-            backgroundColor: [
-                gradientStroke1
-            ],
-            borderColor: [
-                gradientStroke1
-            ],
-            borderWidth: 0,
-            borderRadius: 20
-        }]
-    },
-    options: {
-        maintainAspectRatio: false,
-        barPercentage: 0.9,
-        categoryPercentage: 0.4,
-        plugins: {
-            legend: {
-                maxWidth: 20,
-                boxHeight: 20,
-                position:'bottom',
-                display: false,
-            }
-=======
     var myChart = new Chart(ctx, {
         type: 'bar',
         data: {
@@ -476,7 +432,6 @@ var myChart = new Chart(ctx, {
                 borderWidth: 0,
                 borderRadius: 20
             }]
->>>>>>> 7b7c0c8c30a80a8c33947ac28a0287cc755ba33c
         },
         options: {
             maintainAspectRatio: false,

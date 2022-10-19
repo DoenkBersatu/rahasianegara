@@ -1,0 +1,13 @@
+body{
+    background-color: black;
+    background-image: url(../images/maxresdefault1.jpg);
+    background-position: center;
+    background-size: cover;
+    height: 100vh;
+    width: 100wh;
+}
+
+.judul{
+    padding-top: 15%;
+}
+

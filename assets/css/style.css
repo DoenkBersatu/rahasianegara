@@ -35,7 +35,8 @@ body {
     letter-spacing: .5px;
     background-color: #f7f8fa;
     overflow-x: hidden;
-    font-family: Roboto, sans-serif;
+    font-family: Roboto, sans-serif;\
+    
 }
 
 a {

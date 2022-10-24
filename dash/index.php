@@ -201,7 +201,7 @@ include "koneksi.php"
                         <div class="card radius-10 w-100">
                             <div class="card-body">
                                 <div class="d-flex align-items-center mb-3">
-                                    <h6 class="mb-0">Jumlah Investasi </h6>
+                                    <h6 class="mb-0">Total Investasi </h6>
                                 </div>
                                 <div class="row row-cols-1 row-cols-md-2 g-3 mt-2 align-items-center">
                                     <div class="col-lg-7 col-xl-7 col-xxl-8">

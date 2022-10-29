@@ -5,7 +5,7 @@ ob_start(); // Turn on output buffering
 <?php include_once "ewcfg13.php" ?>
 <?php include_once ((EW_USE_ADODB) ? "adodb5/adodb.inc.php" : "ewmysql13.php") ?>
 <?php include_once "phpfn13.php" ?>
-<?php include_once "minat_investasiinfo.php" ?>
+<?php include_once "statusinfo.php" ?>
 <?php include_once "userinfo.php" ?>
 <?php include_once "userfn13.php" ?>
 <?php
@@ -14,9 +14,9 @@ ob_start(); // Turn on output buffering
 // Page class
 //
 
-$minat_investasi_list = NULL; // Initialize page object first
+$status_list = NULL; // Initialize page object first
 
-class cminat_investasi_list extends cminat_investasi {
+class cstatus_list extends cstatus {
 
 	// Page ID
 	var $PageID = 'list';
@@ -25,13 +25,13 @@ class cminat_investasi_list extends cminat_investasi {
 	var $ProjectID = "{711D4B7A-499A-4AB9-B89B-D8472076C077}";
 
 	// Table name
-	var $TableName = 'minat_investasi';
+	var $TableName = 'status';
 
 	// Page object name
-	var $PageObjName = 'minat_investasi_list';
+	var $PageObjName = 'status_list';
 
 	// Grid form hidden field names
-	var $FormName = 'fminat_investasilist';
+	var $FormName = 'fstatuslist';
 	var $FormActionName = 'k_action';
 	var $FormKeyName = 'k_key';
 	var $FormOldKeyName = 'k_oldkey';
@@ -266,10 +266,10 @@ class cminat_investasi_list extends cminat_investasi {
 		// Parent constuctor
 		parent::__construct();
 
-		// Table object (minat_investasi)
-		if (!isset($GLOBALS["minat_investasi"]) || get_class($GLOBALS["minat_investasi"]) == "cminat_investasi") {
-			$GLOBALS["minat_investasi"] = &$this;
-			$GLOBALS["Table"] = &$GLOBALS["minat_investasi"];
+		// Table object (status)
+		if (!isset($GLOBALS["status"]) || get_class($GLOBALS["status"]) == "cstatus") {
+			$GLOBALS["status"] = &$this;
+			$GLOBALS["Table"] = &$GLOBALS["status"];
 		}
 
 		// Initialize URLs
@@ -280,12 +280,12 @@ class cminat_investasi_list extends cminat_investasi {
 		$this->ExportXmlUrl = $this->PageUrl() . "export=xml";
 		$this->ExportCsvUrl = $this->PageUrl() . "export=csv";
 		$this->ExportPdfUrl = $this->PageUrl() . "export=pdf";
-		$this->AddUrl = "minat_investasiadd.php";
+		$this->AddUrl = "statusadd.php";
 		$this->InlineAddUrl = $this->PageUrl() . "a=add";
 		$this->GridAddUrl = $this->PageUrl() . "a=gridadd";
 		$this->GridEditUrl = $this->PageUrl() . "a=gridedit";
-		$this->MultiDeleteUrl = "minat_investasidelete.php";
-		$this->MultiUpdateUrl = "minat_investasiupdate.php";
+		$this->MultiDeleteUrl = "statusdelete.php";
+		$this->MultiUpdateUrl = "statusupdate.php";
 
 		// Table object (user)
 		if (!isset($GLOBALS['user'])) $GLOBALS['user'] = new cuser();
@@ -296,7 +296,7 @@ class cminat_investasi_list extends cminat_investasi {
 
 		// Table name (for backward compatibility)
 		if (!defined("EW_TABLE_NAME"))
-			define("EW_TABLE_NAME", 'minat_investasi', TRUE);
+			define("EW_TABLE_NAME", 'status', TRUE);
 
 		// Start timer
 		if (!isset($GLOBALS["gTimer"])) $GLOBALS["gTimer"] = new cTimer();
@@ -333,7 +333,7 @@ class cminat_investasi_list extends cminat_investasi {
 		// Filter options
 		$this->FilterOptions = new cListOptions();
 		$this->FilterOptions->Tag = "div";
-		$this->FilterOptions->TagClassName = "ewFilterOption fminat_investasilistsrch";
+		$this->FilterOptions->TagClassName = "ewFilterOption fstatuslistsrch";
 
 		// List actions
 		$this->ListActions = new cListActions();
@@ -370,13 +370,9 @@ class cminat_investasi_list extends cminat_investasi {
 
 		// Set up list options
 		$this->SetupListOptions();
-		$this->id_jenis->SetVisibility();
-		$this->id_kecamatan->SetVisibility();
-		$this->nib->SetVisibility();
-		$this->nama->SetVisibility();
-		$this->penanaman_modal->SetVisibility();
-		$this->jenis_perusahaan->SetVisibility();
-		$this->sysdate->SetVisibility();
+		$this->id_status->SetVisibility();
+		$this->id_status->Visible = !$this->IsAdd() && !$this->IsCopy() && !$this->IsGridAdd();
+		$this->status->SetVisibility();
 
 		// Global Page Loading event (in userfn*.php)
 		Page_Loading();
@@ -437,13 +433,13 @@ class cminat_investasi_list extends cminat_investasi {
 		Page_Unloaded();
 
 		// Export
-		global $EW_EXPORT, $minat_investasi;
+		global $EW_EXPORT, $status;
 		if ($this->CustomExport <> "" && $this->CustomExport == $this->Export && array_key_exists($this->CustomExport, $EW_EXPORT)) {
 				$sContent = ob_get_contents();
 			if ($gsExportFile == "") $gsExportFile = $this->TableVar;
 			$class = $EW_EXPORT[$this->CustomExport];
 			if (class_exists($class)) {
-				$doc = new $class($minat_investasi);
+				$doc = new $class($status);
 				$doc->Text = $sContent;
 				if ($this->Export == "email")
 					echo $this->ExportEmail($doc->Text);
@@ -675,8 +671,8 @@ class cminat_investasi_list extends cminat_investasi {
 	function SetupKeyValues($key) {
 		$arrKeyFlds = explode($GLOBALS["EW_COMPOSITE_KEY_SEPARATOR"], $key);
 		if (count($arrKeyFlds) >= 1) {
-			$this->id_minat_investasi->setFormValue($arrKeyFlds[0]);
-			if (!is_numeric($this->id_minat_investasi->FormValue))
+			$this->id_status->setFormValue($arrKeyFlds[0]);
+			if (!is_numeric($this->id_status->FormValue))
 				return FALSE;
 		}
 		return TRUE;
@@ -688,21 +684,15 @@ class cminat_investasi_list extends cminat_investasi {
 
 		// Load server side filters
 		if (EW_SEARCH_FILTER_OPTION == "Server") {
-			$sSavedFilterList = isset($UserProfile) ? $UserProfile->GetSearchFilters(CurrentUserName(), "fminat_investasilistsrch") : "";
+			$sSavedFilterList = isset($UserProfile) ? $UserProfile->GetSearchFilters(CurrentUserName(), "fstatuslistsrch") : "";
 		} else {
 			$sSavedFilterList = "";
 		}
 
 		// Initialize
 		$sFilterList = "";
-		$sFilterList = ew_Concat($sFilterList, $this->id_minat_investasi->AdvancedSearch->ToJSON(), ","); // Field id_minat_investasi
-		$sFilterList = ew_Concat($sFilterList, $this->id_jenis->AdvancedSearch->ToJSON(), ","); // Field id_jenis
-		$sFilterList = ew_Concat($sFilterList, $this->id_kecamatan->AdvancedSearch->ToJSON(), ","); // Field id_kecamatan
-		$sFilterList = ew_Concat($sFilterList, $this->nib->AdvancedSearch->ToJSON(), ","); // Field nib
-		$sFilterList = ew_Concat($sFilterList, $this->nama->AdvancedSearch->ToJSON(), ","); // Field nama
-		$sFilterList = ew_Concat($sFilterList, $this->penanaman_modal->AdvancedSearch->ToJSON(), ","); // Field penanaman_modal
-		$sFilterList = ew_Concat($sFilterList, $this->jenis_perusahaan->AdvancedSearch->ToJSON(), ","); // Field jenis_perusahaan
-		$sFilterList = ew_Concat($sFilterList, $this->sysdate->AdvancedSearch->ToJSON(), ","); // Field sysdate
+		$sFilterList = ew_Concat($sFilterList, $this->id_status->AdvancedSearch->ToJSON(), ","); // Field id_status
+		$sFilterList = ew_Concat($sFilterList, $this->status->AdvancedSearch->ToJSON(), ","); // Field status
 		if ($this->BasicSearch->Keyword <> "") {
 			$sWrk = "\"" . EW_TABLE_BASIC_SEARCH . "\":\"" . ew_JsEncode2($this->BasicSearch->Keyword) . "\",\"" . EW_TABLE_BASIC_SEARCH_TYPE . "\":\"" . ew_JsEncode2($this->BasicSearch->Type) . "\"";
 			$sFilterList = ew_Concat($sFilterList, $sWrk, ",");
@@ -725,7 +715,7 @@ class cminat_investasi_list extends cminat_investasi {
 		global $UserProfile;
 		if (@$_POST["ajax"] == "savefilters") { // Save filter request (Ajax)
 			$filters = ew_StripSlashes(@$_POST["filters"]);
-			$UserProfile->SetSearchFilters(CurrentUserName(), "fminat_investasilistsrch", $filters);
+			$UserProfile->SetSearchFilters(CurrentUserName(), "fstatuslistsrch", $filters);
 
 			// Clean output buffer
 			if (!EW_DEBUG_ENABLED && ob_get_length())
@@ -747,69 +737,21 @@ class cminat_investasi_list extends cminat_investasi {
 		$filter = json_decode(ew_StripSlashes(@$_POST["filter"]), TRUE);
 		$this->Command = "search";
 
-		// Field id_minat_investasi
-		$this->id_minat_investasi->AdvancedSearch->SearchValue = @$filter["x_id_minat_investasi"];
-		$this->id_minat_investasi->AdvancedSearch->SearchOperator = @$filter["z_id_minat_investasi"];
-		$this->id_minat_investasi->AdvancedSearch->SearchCondition = @$filter["v_id_minat_investasi"];
-		$this->id_minat_investasi->AdvancedSearch->SearchValue2 = @$filter["y_id_minat_investasi"];
-		$this->id_minat_investasi->AdvancedSearch->SearchOperator2 = @$filter["w_id_minat_investasi"];
-		$this->id_minat_investasi->AdvancedSearch->Save();
+		// Field id_status
+		$this->id_status->AdvancedSearch->SearchValue = @$filter["x_id_status"];
+		$this->id_status->AdvancedSearch->SearchOperator = @$filter["z_id_status"];
+		$this->id_status->AdvancedSearch->SearchCondition = @$filter["v_id_status"];
+		$this->id_status->AdvancedSearch->SearchValue2 = @$filter["y_id_status"];
+		$this->id_status->AdvancedSearch->SearchOperator2 = @$filter["w_id_status"];
+		$this->id_status->AdvancedSearch->Save();
 
-		// Field id_jenis
-		$this->id_jenis->AdvancedSearch->SearchValue = @$filter["x_id_jenis"];
-		$this->id_jenis->AdvancedSearch->SearchOperator = @$filter["z_id_jenis"];
-		$this->id_jenis->AdvancedSearch->SearchCondition = @$filter["v_id_jenis"];
-		$this->id_jenis->AdvancedSearch->SearchValue2 = @$filter["y_id_jenis"];
-		$this->id_jenis->AdvancedSearch->SearchOperator2 = @$filter["w_id_jenis"];
-		$this->id_jenis->AdvancedSearch->Save();
-
-		// Field id_kecamatan
-		$this->id_kecamatan->AdvancedSearch->SearchValue = @$filter["x_id_kecamatan"];
-		$this->id_kecamatan->AdvancedSearch->SearchOperator = @$filter["z_id_kecamatan"];
-		$this->id_kecamatan->AdvancedSearch->SearchCondition = @$filter["v_id_kecamatan"];
-		$this->id_kecamatan->AdvancedSearch->SearchValue2 = @$filter["y_id_kecamatan"];
-		$this->id_kecamatan->AdvancedSearch->SearchOperator2 = @$filter["w_id_kecamatan"];
-		$this->id_kecamatan->AdvancedSearch->Save();
-
-		// Field nib
-		$this->nib->AdvancedSearch->SearchValue = @$filter["x_nib"];
-		$this->nib->AdvancedSearch->SearchOperator = @$filter["z_nib"];
-		$this->nib->AdvancedSearch->SearchCondition = @$filter["v_nib"];
-		$this->nib->AdvancedSearch->SearchValue2 = @$filter["y_nib"];
-		$this->nib->AdvancedSearch->SearchOperator2 = @$filter["w_nib"];
-		$this->nib->AdvancedSearch->Save();
-
-		// Field nama
-		$this->nama->AdvancedSearch->SearchValue = @$filter["x_nama"];
-		$this->nama->AdvancedSearch->SearchOperator = @$filter["z_nama"];
-		$this->nama->AdvancedSearch->SearchCondition = @$filter["v_nama"];
-		$this->nama->AdvancedSearch->SearchValue2 = @$filter["y_nama"];
-		$this->nama->AdvancedSearch->SearchOperator2 = @$filter["w_nama"];
-		$this->nama->AdvancedSearch->Save();
-
-		// Field penanaman_modal
-		$this->penanaman_modal->AdvancedSearch->SearchValue = @$filter["x_penanaman_modal"];
-		$this->penanaman_modal->AdvancedSearch->SearchOperator = @$filter["z_penanaman_modal"];
-		$this->penanaman_modal->AdvancedSearch->SearchCondition = @$filter["v_penanaman_modal"];
-		$this->penanaman_modal->AdvancedSearch->SearchValue2 = @$filter["y_penanaman_modal"];
-		$this->penanaman_modal->AdvancedSearch->SearchOperator2 = @$filter["w_penanaman_modal"];
-		$this->penanaman_modal->AdvancedSearch->Save();
-
-		// Field jenis_perusahaan
-		$this->jenis_perusahaan->AdvancedSearch->SearchValue = @$filter["x_jenis_perusahaan"];
-		$this->jenis_perusahaan->AdvancedSearch->SearchOperator = @$filter["z_jenis_perusahaan"];
-		$this->jenis_perusahaan->AdvancedSearch->SearchCondition = @$filter["v_jenis_perusahaan"];
-		$this->jenis_perusahaan->AdvancedSearch->SearchValue2 = @$filter["y_jenis_perusahaan"];
-		$this->jenis_perusahaan->AdvancedSearch->SearchOperator2 = @$filter["w_jenis_perusahaan"];
-		$this->jenis_perusahaan->AdvancedSearch->Save();
-
-		// Field sysdate
-		$this->sysdate->AdvancedSearch->SearchValue = @$filter["x_sysdate"];
-		$this->sysdate->AdvancedSearch->SearchOperator = @$filter["z_sysdate"];
-		$this->sysdate->AdvancedSearch->SearchCondition = @$filter["v_sysdate"];
-		$this->sysdate->AdvancedSearch->SearchValue2 = @$filter["y_sysdate"];
-		$this->sysdate->AdvancedSearch->SearchOperator2 = @$filter["w_sysdate"];
-		$this->sysdate->AdvancedSearch->Save();
+		// Field status
+		$this->status->AdvancedSearch->SearchValue = @$filter["x_status"];
+		$this->status->AdvancedSearch->SearchOperator = @$filter["z_status"];
+		$this->status->AdvancedSearch->SearchCondition = @$filter["v_status"];
+		$this->status->AdvancedSearch->SearchValue2 = @$filter["y_status"];
+		$this->status->AdvancedSearch->SearchOperator2 = @$filter["w_status"];
+		$this->status->AdvancedSearch->Save();
 		$this->BasicSearch->setKeyword(@$filter[EW_TABLE_BASIC_SEARCH]);
 		$this->BasicSearch->setType(@$filter[EW_TABLE_BASIC_SEARCH_TYPE]);
 	}
@@ -817,8 +759,7 @@ class cminat_investasi_list extends cminat_investasi {
 	// Return basic search SQL
 	function BasicSearchSQL($arKeywords, $type) {
 		$sWhere = "";
-		$this->BuildBasicSearchSQL($sWhere, $this->nib, $arKeywords, $type);
-		$this->BuildBasicSearchSQL($sWhere, $this->nama, $arKeywords, $type);
+		$this->BuildBasicSearchSQL($sWhere, $this->status, $arKeywords, $type);
 		return $sWhere;
 	}
 
@@ -984,13 +925,8 @@ class cminat_investasi_list extends cminat_investasi {
 		if (@$_GET["order"] <> "") {
 			$this->CurrentOrder = ew_StripSlashes(@$_GET["order"]);
 			$this->CurrentOrderType = @$_GET["ordertype"];
-			$this->UpdateSort($this->id_jenis); // id_jenis
-			$this->UpdateSort($this->id_kecamatan); // id_kecamatan
-			$this->UpdateSort($this->nib); // nib
-			$this->UpdateSort($this->nama); // nama
-			$this->UpdateSort($this->penanaman_modal); // penanaman_modal
-			$this->UpdateSort($this->jenis_perusahaan); // jenis_perusahaan
-			$this->UpdateSort($this->sysdate); // sysdate
+			$this->UpdateSort($this->id_status); // id_status
+			$this->UpdateSort($this->status); // status
 			$this->setStartRecordNumber(1); // Reset start position
 		}
 	}
@@ -1023,13 +959,8 @@ class cminat_investasi_list extends cminat_investasi {
 			if ($this->Command == "resetsort") {
 				$sOrderBy = "";
 				$this->setSessionOrderBy($sOrderBy);
-				$this->id_jenis->setSort("");
-				$this->id_kecamatan->setSort("");
-				$this->nib->setSort("");
-				$this->nama->setSort("");
-				$this->penanaman_modal->setSort("");
-				$this->jenis_perusahaan->setSort("");
-				$this->sysdate->setSort("");
+				$this->id_status->setSort("");
+				$this->status->setSort("");
 			}
 
 			// Reset start position
@@ -1174,7 +1105,7 @@ class cminat_investasi_list extends cminat_investasi {
 
 		// "checkbox"
 		$oListOpt = &$this->ListOptions->Items["checkbox"];
-		$oListOpt->Body = "<label><input class=\"magic-checkbox ewPointer\" type=\"checkbox\" name=\"key_m[]\" value=\"" . ew_HtmlEncode($this->id_minat_investasi->CurrentValue) . "\" onclick='ew_ClickMultiCheckbox(event);'><span></span></label>";
+		$oListOpt->Body = "<label><input class=\"magic-checkbox ewPointer\" type=\"checkbox\" name=\"key_m[]\" value=\"" . ew_HtmlEncode($this->id_status->CurrentValue) . "\" onclick='ew_ClickMultiCheckbox(event);'><span></span></label>";
 		$this->RenderListOptionsExt();
 
 		// Call ListOptions_Rendered event
@@ -1210,10 +1141,10 @@ class cminat_investasi_list extends cminat_investasi {
 
 		// Filter button
 		$item = &$this->FilterOptions->Add("savecurrentfilter");
-		$item->Body = "<a class=\"ewSaveFilter\" data-form=\"fminat_investasilistsrch\" href=\"#\">" . $Language->Phrase("SaveCurrentFilter") . "</a>";
+		$item->Body = "<a class=\"ewSaveFilter\" data-form=\"fstatuslistsrch\" href=\"#\">" . $Language->Phrase("SaveCurrentFilter") . "</a>";
 		$item->Visible = TRUE;
 		$item = &$this->FilterOptions->Add("deletefilter");
-		$item->Body = "<a class=\"ewDeleteFilter\" data-form=\"fminat_investasilistsrch\" href=\"#\">" . $Language->Phrase("DeleteFilter") . "</a>";
+		$item->Body = "<a class=\"ewDeleteFilter\" data-form=\"fstatuslistsrch\" href=\"#\">" . $Language->Phrase("DeleteFilter") . "</a>";
 		$item->Visible = TRUE;
 		$this->FilterOptions->UseDropDownButton = TRUE;
 		$this->FilterOptions->UseButtonGroup = !$this->FilterOptions->UseDropDownButton;
@@ -1237,7 +1168,7 @@ class cminat_investasi_list extends cminat_investasi {
 					$item = &$option->Add("custom_" . $listaction->Action);
 					$caption = $listaction->Caption;
 					$icon = ($listaction->Icon <> "") ? "<span class=\"" . ew_HtmlEncode($listaction->Icon) . "\" data-caption=\"" . ew_HtmlEncode($caption) . "\"></span> " : $caption;
-					$item->Body = "<a class=\"btn btn-xs btn-default line-2540\" title=\"" . ew_HtmlEncode($caption) . "\" data-caption=\"" . ew_HtmlEncode($caption) . "\" href=\"\" onclick=\"ew_SubmitAction(event,jQuery.extend({f:document.fminat_investasilist}," . $listaction->ToJson(TRUE) . "));return false;\">" . $icon . "</a>";
+					$item->Body = "<a class=\"btn btn-xs btn-default line-2540\" title=\"" . ew_HtmlEncode($caption) . "\" data-caption=\"" . ew_HtmlEncode($caption) . "\" href=\"\" onclick=\"ew_SubmitAction(event,jQuery.extend({f:document.fstatuslist}," . $listaction->ToJson(TRUE) . "));return false;\">" . $icon . "</a>";
 					$item->Visible = $listaction->Allow;
 				}
 			}
@@ -1341,7 +1272,7 @@ class cminat_investasi_list extends cminat_investasi {
 		// Search button
 		$item = &$this->SearchOptions->Add("searchtoggle");
 		$SearchToggleClass = ($this->SearchWhere <> "") ? " active" : " active";
-		$item->Body = "<button type=\"button\" class=\"btn btn-default ewSearchToggle" . $SearchToggleClass . "\" title=\"" . $Language->Phrase("SearchPanel") . "\" data-caption=\"" . $Language->Phrase("SearchPanel") . "\" data-toggle=\"button\" data-form=\"fminat_investasilistsrch\">" . $Language->Phrase("SearchBtn") . "</button>";
+		$item->Body = "<button type=\"button\" class=\"btn btn-default ewSearchToggle" . $SearchToggleClass . "\" title=\"" . $Language->Phrase("SearchPanel") . "\" data-caption=\"" . $Language->Phrase("SearchPanel") . "\" data-toggle=\"button\" data-form=\"fstatuslistsrch\">" . $Language->Phrase("SearchBtn") . "</button>";
 		$item->Visible = TRUE;
 
 		// Show all button
@@ -1476,28 +1407,16 @@ class cminat_investasi_list extends cminat_investasi {
 		// Call Row Selected event
 		$row = &$rs->fields;
 		$this->Row_Selected($row);
-		$this->id_minat_investasi->setDbValue($rs->fields('id_minat_investasi'));
-		$this->id_jenis->setDbValue($rs->fields('id_jenis'));
-		$this->id_kecamatan->setDbValue($rs->fields('id_kecamatan'));
-		$this->nib->setDbValue($rs->fields('nib'));
-		$this->nama->setDbValue($rs->fields('nama'));
-		$this->penanaman_modal->setDbValue($rs->fields('penanaman_modal'));
-		$this->jenis_perusahaan->setDbValue($rs->fields('jenis_perusahaan'));
-		$this->sysdate->setDbValue($rs->fields('sysdate'));
+		$this->id_status->setDbValue($rs->fields('id_status'));
+		$this->status->setDbValue($rs->fields('status'));
 	}
 
 	// Load DbValue from recordset
 	function LoadDbValues(&$rs) {
 		if (!$rs || !is_array($rs) && $rs->EOF) return;
 		$row = is_array($rs) ? $rs : $rs->fields;
-		$this->id_minat_investasi->DbValue = $row['id_minat_investasi'];
-		$this->id_jenis->DbValue = $row['id_jenis'];
-		$this->id_kecamatan->DbValue = $row['id_kecamatan'];
-		$this->nib->DbValue = $row['nib'];
-		$this->nama->DbValue = $row['nama'];
-		$this->penanaman_modal->DbValue = $row['penanaman_modal'];
-		$this->jenis_perusahaan->DbValue = $row['jenis_perusahaan'];
-		$this->sysdate->DbValue = $row['sysdate'];
+		$this->id_status->DbValue = $row['id_status'];
+		$this->status->DbValue = $row['status'];
 	}
 
 	// Load old record
@@ -1505,8 +1424,8 @@ class cminat_investasi_list extends cminat_investasi {
 
 		// Load key values from Session
 		$bValidKey = TRUE;
-		if (strval($this->getKey("id_minat_investasi")) <> "")
-			$this->id_minat_investasi->CurrentValue = $this->getKey("id_minat_investasi"); // id_minat_investasi
+		if (strval($this->getKey("id_status")) <> "")
+			$this->id_status->CurrentValue = $this->getKey("id_status"); // id_status
 		else
 			$bValidKey = FALSE;
 
@@ -1539,122 +1458,28 @@ class cminat_investasi_list extends cminat_investasi {
 		$this->Row_Rendering();
 
 		// Common render codes for all row types
-		// id_minat_investasi
-		// id_jenis
-		// id_kecamatan
-		// nib
-		// nama
-		// penanaman_modal
-		// jenis_perusahaan
-		// sysdate
+		// id_status
+		// status
 
 		if ($this->RowType == EW_ROWTYPE_VIEW) { // View row
 
-		// id_minat_investasi
-		$this->id_minat_investasi->ViewValue = $this->id_minat_investasi->CurrentValue;
-		$this->id_minat_investasi->ViewCustomAttributes = "";
+		// id_status
+		$this->id_status->ViewValue = $this->id_status->CurrentValue;
+		$this->id_status->ViewCustomAttributes = "";
 
-		// id_jenis
-		if (strval($this->id_jenis->CurrentValue) <> "") {
-			$sFilterWrk = "`id_jenis`" . ew_SearchString("=", $this->id_jenis->CurrentValue, EW_DATATYPE_NUMBER, "");
-		$sSqlWrk = "SELECT `id_jenis`, `jenis` AS `DispFld`, '' AS `Disp2Fld`, '' AS `Disp3Fld`, '' AS `Disp4Fld` FROM `jenis`";
-		$sWhereWrk = "";
-		$this->id_jenis->LookupFilters = array();
-		ew_AddFilter($sWhereWrk, $sFilterWrk);
-		$this->Lookup_Selecting($this->id_jenis, $sWhereWrk); // Call Lookup selecting
-		if ($sWhereWrk <> "") $sSqlWrk .= " WHERE " . $sWhereWrk;
-			$rswrk = Conn()->Execute($sSqlWrk);
-			if ($rswrk && !$rswrk->EOF) { // Lookup values found
-				$arwrk = array();
-				$arwrk[1] = $rswrk->fields('DispFld');
-				$this->id_jenis->ViewValue = $this->id_jenis->DisplayValue($arwrk);
-				$rswrk->Close();
-			} else {
-				$this->id_jenis->ViewValue = $this->id_jenis->CurrentValue;
-			}
-		} else {
-			$this->id_jenis->ViewValue = NULL;
-		}
-		$this->id_jenis->ViewCustomAttributes = "";
+		// status
+		$this->status->ViewValue = $this->status->CurrentValue;
+		$this->status->ViewCustomAttributes = "";
 
-		// id_kecamatan
-		if (strval($this->id_kecamatan->CurrentValue) <> "") {
-			$sFilterWrk = "`id_kecamatan`" . ew_SearchString("=", $this->id_kecamatan->CurrentValue, EW_DATATYPE_NUMBER, "");
-		$sSqlWrk = "SELECT `id_kecamatan`, `kecamatan` AS `DispFld`, '' AS `Disp2Fld`, '' AS `Disp3Fld`, '' AS `Disp4Fld` FROM `kecamatan`";
-		$sWhereWrk = "";
-		$this->id_kecamatan->LookupFilters = array();
-		ew_AddFilter($sWhereWrk, $sFilterWrk);
-		$this->Lookup_Selecting($this->id_kecamatan, $sWhereWrk); // Call Lookup selecting
-		if ($sWhereWrk <> "") $sSqlWrk .= " WHERE " . $sWhereWrk;
-			$rswrk = Conn()->Execute($sSqlWrk);
-			if ($rswrk && !$rswrk->EOF) { // Lookup values found
-				$arwrk = array();
-				$arwrk[1] = $rswrk->fields('DispFld');
-				$this->id_kecamatan->ViewValue = $this->id_kecamatan->DisplayValue($arwrk);
-				$rswrk->Close();
-			} else {
-				$this->id_kecamatan->ViewValue = $this->id_kecamatan->CurrentValue;
-			}
-		} else {
-			$this->id_kecamatan->ViewValue = NULL;
-		}
-		$this->id_kecamatan->ViewCustomAttributes = "";
+			// id_status
+			$this->id_status->LinkCustomAttributes = "";
+			$this->id_status->HrefValue = "";
+			$this->id_status->TooltipValue = "";
 
-		// nib
-		$this->nib->ViewValue = $this->nib->CurrentValue;
-		$this->nib->ViewCustomAttributes = "";
-
-		// nama
-		$this->nama->ViewValue = $this->nama->CurrentValue;
-		$this->nama->ViewCustomAttributes = "";
-
-		// penanaman_modal
-		$this->penanaman_modal->ViewValue = $this->penanaman_modal->CurrentValue;
-		$this->penanaman_modal->ViewCustomAttributes = "";
-
-		// jenis_perusahaan
-		$this->jenis_perusahaan->ViewValue = $this->jenis_perusahaan->CurrentValue;
-		$this->jenis_perusahaan->ViewCustomAttributes = "";
-
-		// sysdate
-		$this->sysdate->ViewValue = $this->sysdate->CurrentValue;
-		$this->sysdate->ViewValue = ew_FormatDateTime($this->sysdate->ViewValue, 0);
-		$this->sysdate->ViewCustomAttributes = "";
-
-			// id_jenis
-			$this->id_jenis->LinkCustomAttributes = "";
-			$this->id_jenis->HrefValue = "";
-			$this->id_jenis->TooltipValue = "";
-
-			// id_kecamatan
-			$this->id_kecamatan->LinkCustomAttributes = "";
-			$this->id_kecamatan->HrefValue = "";
-			$this->id_kecamatan->TooltipValue = "";
-
-			// nib
-			$this->nib->LinkCustomAttributes = "";
-			$this->nib->HrefValue = "";
-			$this->nib->TooltipValue = "";
-
-			// nama
-			$this->nama->LinkCustomAttributes = "";
-			$this->nama->HrefValue = "";
-			$this->nama->TooltipValue = "";
-
-			// penanaman_modal
-			$this->penanaman_modal->LinkCustomAttributes = "";
-			$this->penanaman_modal->HrefValue = "";
-			$this->penanaman_modal->TooltipValue = "";
-
-			// jenis_perusahaan
-			$this->jenis_perusahaan->LinkCustomAttributes = "";
-			$this->jenis_perusahaan->HrefValue = "";
-			$this->jenis_perusahaan->TooltipValue = "";
-
-			// sysdate
-			$this->sysdate->LinkCustomAttributes = "";
-			$this->sysdate->HrefValue = "";
-			$this->sysdate->TooltipValue = "";
+			// status
+			$this->status->LinkCustomAttributes = "";
+			$this->status->HrefValue = "";
+			$this->status->TooltipValue = "";
 		}
 
 		// Call Row Rendered event
@@ -1811,30 +1636,30 @@ class cminat_investasi_list extends cminat_investasi {
 <?php
 
 // Create page object
-if (!isset($minat_investasi_list)) $minat_investasi_list = new cminat_investasi_list();
+if (!isset($status_list)) $status_list = new cstatus_list();
 
 // Page init
-$minat_investasi_list->Page_Init();
+$status_list->Page_Init();
 
 // Page main
-$minat_investasi_list->Page_Main();
+$status_list->Page_Main();
 
 // Global Page Rendering event (in userfn*.php)
 Page_Rendering();
 
 // Page Rendering event
-$minat_investasi_list->Page_Render();
+$status_list->Page_Render();
 ?>
 <?php include_once "header.php" ?>
 <script type="text/javascript">
 
 // Form object
 var CurrentPageID = EW_PAGE_ID = "list";
-var CurrentForm = fminat_investasilist = new ew_Form("fminat_investasilist", "list");
-fminat_investasilist.FormKeyCountName = '<?php echo $minat_investasi_list->FormKeyCountName ?>';
+var CurrentForm = fstatuslist = new ew_Form("fstatuslist", "list");
+fstatuslist.FormKeyCountName = '<?php echo $status_list->FormKeyCountName ?>';
 
 // Form_CustomValidate event
-fminat_investasilist.Form_CustomValidate = 
+fstatuslist.Form_CustomValidate = 
  function(fobj) { // DO NOT CHANGE THIS LINE!
 
  	// Your custom validation code here, return false if invalid. 
@@ -1843,79 +1668,77 @@ fminat_investasilist.Form_CustomValidate =
 
 // Use JavaScript validation or not
 <?php if (EW_CLIENT_VALIDATE) { ?>
-fminat_investasilist.ValidateRequired = true;
+fstatuslist.ValidateRequired = true;
 <?php } else { ?>
-fminat_investasilist.ValidateRequired = false; 
+fstatuslist.ValidateRequired = false; 
 <?php } ?>
 
 // Dynamic selection lists
-fminat_investasilist.Lists["x_id_jenis"] = {"LinkField":"x_id_jenis","Ajax":true,"AutoFill":false,"DisplayFields":["x_jenis","","",""],"ParentFields":[],"ChildFields":[],"FilterFields":[],"Options":[],"Template":"","LinkTable":"jenis"};
-fminat_investasilist.Lists["x_id_kecamatan"] = {"LinkField":"x_id_kecamatan","Ajax":true,"AutoFill":false,"DisplayFields":["x_kecamatan","","",""],"ParentFields":[],"ChildFields":[],"FilterFields":[],"Options":[],"Template":"","LinkTable":"kecamatan"};
-
 // Form object for search
-var CurrentSearchForm = fminat_investasilistsrch = new ew_Form("fminat_investasilistsrch");
+
+var CurrentSearchForm = fstatuslistsrch = new ew_Form("fstatuslistsrch");
 </script>
 <script type="text/javascript">
 
 // Write your client script here, no need to add script tags.
 </script>
-<?php if ($minat_investasi_list->TotalRecs > 0 && $minat_investasi_list->ExportOptions->Visible()) { ?>
-<?php $minat_investasi_list->ExportOptions->Render("body") ?>
+<?php if ($status_list->TotalRecs > 0 && $status_list->ExportOptions->Visible()) { ?>
+<?php $status_list->ExportOptions->Render("body") ?>
 <?php } ?>
-<?php if ($minat_investasi_list->SearchOptions->Visible()) { ?>
-<?php $minat_investasi_list->SearchOptions->Render("body") ?>
+<?php if ($status_list->SearchOptions->Visible()) { ?>
+<?php $status_list->SearchOptions->Render("body") ?>
 <?php } ?>
-<?php if ($minat_investasi_list->FilterOptions->Visible()) { ?>
-<?php $minat_investasi_list->FilterOptions->Render("body") ?>
+<?php if ($status_list->FilterOptions->Visible()) { ?>
+<?php $status_list->FilterOptions->Render("body") ?>
 <?php } ?>
 <div class="clearfix"></div>
 <?php
-	$bSelectLimit = $minat_investasi_list->UseSelectLimit;
+	$bSelectLimit = $status_list->UseSelectLimit;
 	if ($bSelectLimit) {
-		if ($minat_investasi_list->TotalRecs <= 0)
-			$minat_investasi_list->TotalRecs = $minat_investasi->SelectRecordCount();
+		if ($status_list->TotalRecs <= 0)
+			$status_list->TotalRecs = $status->SelectRecordCount();
 	} else {
-		if (!$minat_investasi_list->Recordset && ($minat_investasi_list->Recordset = $minat_investasi_list->LoadRecordset()))
-			$minat_investasi_list->TotalRecs = $minat_investasi_list->Recordset->RecordCount();
+		if (!$status_list->Recordset && ($status_list->Recordset = $status_list->LoadRecordset()))
+			$status_list->TotalRecs = $status_list->Recordset->RecordCount();
 	}
-	$minat_investasi_list->StartRec = 1;
-	if ($minat_investasi_list->DisplayRecs <= 0 || ($minat_investasi->Export <> "" && $minat_investasi->ExportAll)) // Display all records
-		$minat_investasi_list->DisplayRecs = $minat_investasi_list->TotalRecs;
-	if (!($minat_investasi->Export <> "" && $minat_investasi->ExportAll))
-		$minat_investasi_list->SetUpStartRec(); // Set up start record position
+	$status_list->StartRec = 1;
+	if ($status_list->DisplayRecs <= 0 || ($status->Export <> "" && $status->ExportAll)) // Display all records
+		$status_list->DisplayRecs = $status_list->TotalRecs;
+	if (!($status->Export <> "" && $status->ExportAll))
+		$status_list->SetUpStartRec(); // Set up start record position
 	if ($bSelectLimit)
-		$minat_investasi_list->Recordset = $minat_investasi_list->LoadRecordset($minat_investasi_list->StartRec-1, $minat_investasi_list->DisplayRecs);
+		$status_list->Recordset = $status_list->LoadRecordset($status_list->StartRec-1, $status_list->DisplayRecs);
 
 	// Set no record found message
-	if ($minat_investasi->CurrentAction == "" && $minat_investasi_list->TotalRecs == 0) {
+	if ($status->CurrentAction == "" && $status_list->TotalRecs == 0) {
 		if (!$Security->CanList())
-			$minat_investasi_list->setWarningMessage(ew_DeniedMsg());
-		if ($minat_investasi_list->SearchWhere == "0=101")
-			$minat_investasi_list->setWarningMessage($Language->Phrase("EnterSearchCriteria"));
+			$status_list->setWarningMessage(ew_DeniedMsg());
+		if ($status_list->SearchWhere == "0=101")
+			$status_list->setWarningMessage($Language->Phrase("EnterSearchCriteria"));
 		else
-			$minat_investasi_list->setWarningMessage($Language->Phrase("NoRecord"));
+			$status_list->setWarningMessage($Language->Phrase("NoRecord"));
 	}
-$minat_investasi_list->RenderOtherOptions();
+$status_list->RenderOtherOptions();
 ?>
 <?php if ($Security->CanSearch()) { ?>
-<?php if ($minat_investasi->Export == "" && $minat_investasi->CurrentAction == "") { ?>
-<form name="fminat_investasilistsrch" id="fminat_investasilistsrch" class="form-horizontal ewForm" action="<?php echo ew_CurrentPage() ?>">
-<?php $SearchPanelClass = ($minat_investasi_list->SearchWhere <> "") ? " in" : " in"; ?>
-<div id="fminat_investasilistsrch_SearchPanel" class="box box-default collapse<?php echo $SearchPanelClass ?>">
+<?php if ($status->Export == "" && $status->CurrentAction == "") { ?>
+<form name="fstatuslistsrch" id="fstatuslistsrch" class="form-horizontal ewForm" action="<?php echo ew_CurrentPage() ?>">
+<?php $SearchPanelClass = ($status_list->SearchWhere <> "") ? " in" : " in"; ?>
+<div id="fstatuslistsrch_SearchPanel" class="box box-default collapse<?php echo $SearchPanelClass ?>">
 <input type="hidden" name="cmd" value="search">
-<input type="hidden" name="t" value="minat_investasi">
+<input type="hidden" name="t" value="status">
 <div class="box-body">
 <div id="xsr_1">
 	<div class="ewQuickSearch input-group">
-	<input type="text" name="<?php echo EW_TABLE_BASIC_SEARCH ?>" id="<?php echo EW_TABLE_BASIC_SEARCH ?>" class="form-control" value="<?php echo ew_HtmlEncode($minat_investasi_list->BasicSearch->getKeyword()) ?>" placeholder="<?php echo ew_HtmlEncode($Language->Phrase("Search")) ?>">
-	<input type="hidden" name="<?php echo EW_TABLE_BASIC_SEARCH_TYPE ?>" id="<?php echo EW_TABLE_BASIC_SEARCH_TYPE ?>" value="<?php echo ew_HtmlEncode($minat_investasi_list->BasicSearch->getType()) ?>">
+	<input type="text" name="<?php echo EW_TABLE_BASIC_SEARCH ?>" id="<?php echo EW_TABLE_BASIC_SEARCH ?>" class="form-control" value="<?php echo ew_HtmlEncode($status_list->BasicSearch->getKeyword()) ?>" placeholder="<?php echo ew_HtmlEncode($Language->Phrase("Search")) ?>">
+	<input type="hidden" name="<?php echo EW_TABLE_BASIC_SEARCH_TYPE ?>" id="<?php echo EW_TABLE_BASIC_SEARCH_TYPE ?>" value="<?php echo ew_HtmlEncode($status_list->BasicSearch->getType()) ?>">
 	<div class="input-group-btn">
-		<button type="button" data-toggle="dropdown" class="btn btn-default"><span id="searchtype"><?php echo $minat_investasi_list->BasicSearch->getTypeNameShort() ?></span><span class="caret"></span></button>
+		<button type="button" data-toggle="dropdown" class="btn btn-default"><span id="searchtype"><?php echo $status_list->BasicSearch->getTypeNameShort() ?></span><span class="caret"></span></button>
 		<ul class="dropdown-menu pull-right" role="menu">
-			<li<?php if ($minat_investasi_list->BasicSearch->getType() == "") echo " class=\"active\""; ?>><a href="javascript:void(0);" onclick="ew_SetSearchType(this)"><?php echo $Language->Phrase("QuickSearchAuto") ?></a></li>
-			<li<?php if ($minat_investasi_list->BasicSearch->getType() == "=") echo " class=\"active\""; ?>><a href="javascript:void(0);" onclick="ew_SetSearchType(this,'=')"><?php echo $Language->Phrase("QuickSearchExact") ?></a></li>
-			<li<?php if ($minat_investasi_list->BasicSearch->getType() == "AND") echo " class=\"active\""; ?>><a href="javascript:void(0);" onclick="ew_SetSearchType(this,'AND')"><?php echo $Language->Phrase("QuickSearchAll") ?></a></li>
-			<li<?php if ($minat_investasi_list->BasicSearch->getType() == "OR") echo " class=\"active\""; ?>><a href="javascript:void(0);" onclick="ew_SetSearchType(this,'OR')"><?php echo $Language->Phrase("QuickSearchAny") ?></a></li>
+			<li<?php if ($status_list->BasicSearch->getType() == "") echo " class=\"active\""; ?>><a href="javascript:void(0);" onclick="ew_SetSearchType(this)"><?php echo $Language->Phrase("QuickSearchAuto") ?></a></li>
+			<li<?php if ($status_list->BasicSearch->getType() == "=") echo " class=\"active\""; ?>><a href="javascript:void(0);" onclick="ew_SetSearchType(this,'=')"><?php echo $Language->Phrase("QuickSearchExact") ?></a></li>
+			<li<?php if ($status_list->BasicSearch->getType() == "AND") echo " class=\"active\""; ?>><a href="javascript:void(0);" onclick="ew_SetSearchType(this,'AND')"><?php echo $Language->Phrase("QuickSearchAll") ?></a></li>
+			<li<?php if ($status_list->BasicSearch->getType() == "OR") echo " class=\"active\""; ?>><a href="javascript:void(0);" onclick="ew_SetSearchType(this,'OR')"><?php echo $Language->Phrase("QuickSearchAny") ?></a></li>
 		</ul>
 	<button class="btn btn-primary ewButton" name="btnsubmit" id="btnsubmit" type="submit"><?php echo $Language->Phrase("QuickSearchBtn") ?></button>
 	</div>
@@ -1926,234 +1749,149 @@ $minat_investasi_list->RenderOtherOptions();
 </form>
 <?php } ?>
 <?php } ?>
-<?php $minat_investasi_list->ShowPageHeader(); ?>
+<?php $status_list->ShowPageHeader(); ?>
 <?php
-$minat_investasi_list->ShowMessage();
+$status_list->ShowMessage();
 ?>
-<?php if ($minat_investasi_list->TotalRecs > 0 || $minat_investasi->CurrentAction <> "") { ?>
-<div class="panel panel-default ewGrid minat_investasi">
-<form name="fminat_investasilist" id="fminat_investasilist" class="form-inline ewForm ewListForm" action="<?php echo ew_CurrentPage() ?>" method="post">
-<?php if ($minat_investasi_list->CheckToken) { ?>
-<input type="hidden" name="<?php echo EW_TOKEN_NAME ?>" value="<?php echo $minat_investasi_list->Token ?>">
+<?php if ($status_list->TotalRecs > 0 || $status->CurrentAction <> "") { ?>
+<div class="panel panel-default ewGrid status">
+<form name="fstatuslist" id="fstatuslist" class="form-inline ewForm ewListForm" action="<?php echo ew_CurrentPage() ?>" method="post">
+<?php if ($status_list->CheckToken) { ?>
+<input type="hidden" name="<?php echo EW_TOKEN_NAME ?>" value="<?php echo $status_list->Token ?>">
 <?php } ?>
-<input type="hidden" name="t" value="minat_investasi">
-<div id="gmp_minat_investasi" class="table-responsive box box-primary ewGridMiddlePanel">
-<?php if ($minat_investasi_list->TotalRecs > 0 || $minat_investasi->CurrentAction == "gridedit") { ?>
-<table id="tbl_minat_investasilist" class="table ewTable table-bordered table-striped table-condensed table-hover">
-<?php echo $minat_investasi->TableCustomInnerHtml ?>
+<input type="hidden" name="t" value="status">
+<div id="gmp_status" class="table-responsive box box-primary ewGridMiddlePanel">
+<?php if ($status_list->TotalRecs > 0 || $status->CurrentAction == "gridedit") { ?>
+<table id="tbl_statuslist" class="table ewTable table-bordered table-striped table-condensed table-hover">
+<?php echo $status->TableCustomInnerHtml ?>
 <thead><!-- Table header -->
 	<tr class="ewTableHeader">
 <?php
 
 // Header row
-$minat_investasi_list->RowType = EW_ROWTYPE_HEADER;
+$status_list->RowType = EW_ROWTYPE_HEADER;
 
 // Render list options
-$minat_investasi_list->RenderListOptions();
+$status_list->RenderListOptions();
 
 // Render list options (header, left)
-$minat_investasi_list->ListOptions->Render("header", "left");
+$status_list->ListOptions->Render("header", "left");
 ?>
-<?php if ($minat_investasi->id_jenis->Visible) { // id_jenis ?>
-	<?php if ($minat_investasi->SortUrl($minat_investasi->id_jenis) == "") { ?>
-		<th data-name="id_jenis"><div id="elh_minat_investasi_id_jenis" class="minat_investasi_id_jenis"><div class="ewTableHeaderCaption"><?php echo $minat_investasi->id_jenis->FldCaption() ?></div></div></th>
+<?php if ($status->id_status->Visible) { // id_status ?>
+	<?php if ($status->SortUrl($status->id_status) == "") { ?>
+		<th data-name="id_status"><div id="elh_status_id_status" class="status_id_status"><div class="ewTableHeaderCaption"><?php echo $status->id_status->FldCaption() ?></div></div></th>
 	<?php } else { ?>
-		<th data-name="id_jenis"><div class="ewPointer" onclick="ew_Sort(event,'<?php echo $minat_investasi->SortUrl($minat_investasi->id_jenis) ?>',1);"><div id="elh_minat_investasi_id_jenis" class="minat_investasi_id_jenis">
-			<div class="ewTableHeaderBtn"><span class="ewTableHeaderCaption"><?php echo $minat_investasi->id_jenis->FldCaption() ?></span><span class="ewTableHeaderSort"><?php if ($minat_investasi->id_jenis->getSort() == "ASC") { ?> <i class="fa fa-sort-amount-asc text-muted"></i><?php } elseif ($minat_investasi->id_jenis->getSort() == "DESC") { ?> <i class="fa fa-sort-amount-desc text-muted"></i><?php } ?></span></div>
+		<th data-name="id_status"><div class="ewPointer" onclick="ew_Sort(event,'<?php echo $status->SortUrl($status->id_status) ?>',1);"><div id="elh_status_id_status" class="status_id_status">
+			<div class="ewTableHeaderBtn"><span class="ewTableHeaderCaption"><?php echo $status->id_status->FldCaption() ?></span><span class="ewTableHeaderSort"><?php if ($status->id_status->getSort() == "ASC") { ?> <i class="fa fa-sort-amount-asc text-muted"></i><?php } elseif ($status->id_status->getSort() == "DESC") { ?> <i class="fa fa-sort-amount-desc text-muted"></i><?php } ?></span></div>
         </div></div></th>
 	<?php } ?>
 <?php } ?>		
-<?php if ($minat_investasi->id_kecamatan->Visible) { // id_kecamatan ?>
-	<?php if ($minat_investasi->SortUrl($minat_investasi->id_kecamatan) == "") { ?>
-		<th data-name="id_kecamatan"><div id="elh_minat_investasi_id_kecamatan" class="minat_investasi_id_kecamatan"><div class="ewTableHeaderCaption"><?php echo $minat_investasi->id_kecamatan->FldCaption() ?></div></div></th>
+<?php if ($status->status->Visible) { // status ?>
+	<?php if ($status->SortUrl($status->status) == "") { ?>
+		<th data-name="status"><div id="elh_status_status" class="status_status"><div class="ewTableHeaderCaption"><?php echo $status->status->FldCaption() ?></div></div></th>
 	<?php } else { ?>
-		<th data-name="id_kecamatan"><div class="ewPointer" onclick="ew_Sort(event,'<?php echo $minat_investasi->SortUrl($minat_investasi->id_kecamatan) ?>',1);"><div id="elh_minat_investasi_id_kecamatan" class="minat_investasi_id_kecamatan">
-			<div class="ewTableHeaderBtn"><span class="ewTableHeaderCaption"><?php echo $minat_investasi->id_kecamatan->FldCaption() ?></span><span class="ewTableHeaderSort"><?php if ($minat_investasi->id_kecamatan->getSort() == "ASC") { ?> <i class="fa fa-sort-amount-asc text-muted"></i><?php } elseif ($minat_investasi->id_kecamatan->getSort() == "DESC") { ?> <i class="fa fa-sort-amount-desc text-muted"></i><?php } ?></span></div>
-        </div></div></th>
-	<?php } ?>
-<?php } ?>		
-<?php if ($minat_investasi->nib->Visible) { // nib ?>
-	<?php if ($minat_investasi->SortUrl($minat_investasi->nib) == "") { ?>
-		<th data-name="nib"><div id="elh_minat_investasi_nib" class="minat_investasi_nib"><div class="ewTableHeaderCaption"><?php echo $minat_investasi->nib->FldCaption() ?></div></div></th>
-	<?php } else { ?>
-		<th data-name="nib"><div class="ewPointer" onclick="ew_Sort(event,'<?php echo $minat_investasi->SortUrl($minat_investasi->nib) ?>',1);"><div id="elh_minat_investasi_nib" class="minat_investasi_nib">
-			<div class="ewTableHeaderBtn"><span class="ewTableHeaderCaption"><?php echo $minat_investasi->nib->FldCaption() ?><?php echo $Language->Phrase("SrchLegend") ?></span><span class="ewTableHeaderSort"><?php if ($minat_investasi->nib->getSort() == "ASC") { ?> <i class="fa fa-sort-amount-asc text-muted"></i><?php } elseif ($minat_investasi->nib->getSort() == "DESC") { ?> <i class="fa fa-sort-amount-desc text-muted"></i><?php } ?></span></div>
-        </div></div></th>
-	<?php } ?>
-<?php } ?>		
-<?php if ($minat_investasi->nama->Visible) { // nama ?>
-	<?php if ($minat_investasi->SortUrl($minat_investasi->nama) == "") { ?>
-		<th data-name="nama"><div id="elh_minat_investasi_nama" class="minat_investasi_nama"><div class="ewTableHeaderCaption"><?php echo $minat_investasi->nama->FldCaption() ?></div></div></th>
-	<?php } else { ?>
-		<th data-name="nama"><div class="ewPointer" onclick="ew_Sort(event,'<?php echo $minat_investasi->SortUrl($minat_investasi->nama) ?>',1);"><div id="elh_minat_investasi_nama" class="minat_investasi_nama">
-			<div class="ewTableHeaderBtn"><span class="ewTableHeaderCaption"><?php echo $minat_investasi->nama->FldCaption() ?><?php echo $Language->Phrase("SrchLegend") ?></span><span class="ewTableHeaderSort"><?php if ($minat_investasi->nama->getSort() == "ASC") { ?> <i class="fa fa-sort-amount-asc text-muted"></i><?php } elseif ($minat_investasi->nama->getSort() == "DESC") { ?> <i class="fa fa-sort-amount-desc text-muted"></i><?php } ?></span></div>
-        </div></div></th>
-	<?php } ?>
-<?php } ?>		
-<?php if ($minat_investasi->penanaman_modal->Visible) { // penanaman_modal ?>
-	<?php if ($minat_investasi->SortUrl($minat_investasi->penanaman_modal) == "") { ?>
-		<th data-name="penanaman_modal"><div id="elh_minat_investasi_penanaman_modal" class="minat_investasi_penanaman_modal"><div class="ewTableHeaderCaption"><?php echo $minat_investasi->penanaman_modal->FldCaption() ?></div></div></th>
-	<?php } else { ?>
-		<th data-name="penanaman_modal"><div class="ewPointer" onclick="ew_Sort(event,'<?php echo $minat_investasi->SortUrl($minat_investasi->penanaman_modal) ?>',1);"><div id="elh_minat_investasi_penanaman_modal" class="minat_investasi_penanaman_modal">
-			<div class="ewTableHeaderBtn"><span class="ewTableHeaderCaption"><?php echo $minat_investasi->penanaman_modal->FldCaption() ?></span><span class="ewTableHeaderSort"><?php if ($minat_investasi->penanaman_modal->getSort() == "ASC") { ?> <i class="fa fa-sort-amount-asc text-muted"></i><?php } elseif ($minat_investasi->penanaman_modal->getSort() == "DESC") { ?> <i class="fa fa-sort-amount-desc text-muted"></i><?php } ?></span></div>
-        </div></div></th>
-	<?php } ?>
-<?php } ?>		
-<?php if ($minat_investasi->jenis_perusahaan->Visible) { // jenis_perusahaan ?>
-	<?php if ($minat_investasi->SortUrl($minat_investasi->jenis_perusahaan) == "") { ?>
-		<th data-name="jenis_perusahaan"><div id="elh_minat_investasi_jenis_perusahaan" class="minat_investasi_jenis_perusahaan"><div class="ewTableHeaderCaption"><?php echo $minat_investasi->jenis_perusahaan->FldCaption() ?></div></div></th>
-	<?php } else { ?>
-		<th data-name="jenis_perusahaan"><div class="ewPointer" onclick="ew_Sort(event,'<?php echo $minat_investasi->SortUrl($minat_investasi->jenis_perusahaan) ?>',1);"><div id="elh_minat_investasi_jenis_perusahaan" class="minat_investasi_jenis_perusahaan">
-			<div class="ewTableHeaderBtn"><span class="ewTableHeaderCaption"><?php echo $minat_investasi->jenis_perusahaan->FldCaption() ?></span><span class="ewTableHeaderSort"><?php if ($minat_investasi->jenis_perusahaan->getSort() == "ASC") { ?> <i class="fa fa-sort-amount-asc text-muted"></i><?php } elseif ($minat_investasi->jenis_perusahaan->getSort() == "DESC") { ?> <i class="fa fa-sort-amount-desc text-muted"></i><?php } ?></span></div>
-        </div></div></th>
-	<?php } ?>
-<?php } ?>		
-<?php if ($minat_investasi->sysdate->Visible) { // sysdate ?>
-	<?php if ($minat_investasi->SortUrl($minat_investasi->sysdate) == "") { ?>
-		<th data-name="sysdate"><div id="elh_minat_investasi_sysdate" class="minat_investasi_sysdate"><div class="ewTableHeaderCaption"><?php echo $minat_investasi->sysdate->FldCaption() ?></div></div></th>
-	<?php } else { ?>
-		<th data-name="sysdate"><div class="ewPointer" onclick="ew_Sort(event,'<?php echo $minat_investasi->SortUrl($minat_investasi->sysdate) ?>',1);"><div id="elh_minat_investasi_sysdate" class="minat_investasi_sysdate">
-			<div class="ewTableHeaderBtn"><span class="ewTableHeaderCaption"><?php echo $minat_investasi->sysdate->FldCaption() ?></span><span class="ewTableHeaderSort"><?php if ($minat_investasi->sysdate->getSort() == "ASC") { ?> <i class="fa fa-sort-amount-asc text-muted"></i><?php } elseif ($minat_investasi->sysdate->getSort() == "DESC") { ?> <i class="fa fa-sort-amount-desc text-muted"></i><?php } ?></span></div>
+		<th data-name="status"><div class="ewPointer" onclick="ew_Sort(event,'<?php echo $status->SortUrl($status->status) ?>',1);"><div id="elh_status_status" class="status_status">
+			<div class="ewTableHeaderBtn"><span class="ewTableHeaderCaption"><?php echo $status->status->FldCaption() ?><?php echo $Language->Phrase("SrchLegend") ?></span><span class="ewTableHeaderSort"><?php if ($status->status->getSort() == "ASC") { ?> <i class="fa fa-sort-amount-asc text-muted"></i><?php } elseif ($status->status->getSort() == "DESC") { ?> <i class="fa fa-sort-amount-desc text-muted"></i><?php } ?></span></div>
         </div></div></th>
 	<?php } ?>
 <?php } ?>		
 <?php
 
 // Render list options (header, right)
-$minat_investasi_list->ListOptions->Render("header", "right");
+$status_list->ListOptions->Render("header", "right");
 ?>
 	</tr>
 </thead>
 <tbody>
 <?php
-if ($minat_investasi->ExportAll && $minat_investasi->Export <> "") {
-	$minat_investasi_list->StopRec = $minat_investasi_list->TotalRecs;
+if ($status->ExportAll && $status->Export <> "") {
+	$status_list->StopRec = $status_list->TotalRecs;
 } else {
 
 	// Set the last record to display
-	if ($minat_investasi_list->TotalRecs > $minat_investasi_list->StartRec + $minat_investasi_list->DisplayRecs - 1)
-		$minat_investasi_list->StopRec = $minat_investasi_list->StartRec + $minat_investasi_list->DisplayRecs - 1;
+	if ($status_list->TotalRecs > $status_list->StartRec + $status_list->DisplayRecs - 1)
+		$status_list->StopRec = $status_list->StartRec + $status_list->DisplayRecs - 1;
 	else
-		$minat_investasi_list->StopRec = $minat_investasi_list->TotalRecs;
+		$status_list->StopRec = $status_list->TotalRecs;
 }
-$minat_investasi_list->RecCnt = $minat_investasi_list->StartRec - 1;
-if ($minat_investasi_list->Recordset && !$minat_investasi_list->Recordset->EOF) {
-	$minat_investasi_list->Recordset->MoveFirst();
-	$bSelectLimit = $minat_investasi_list->UseSelectLimit;
-	if (!$bSelectLimit && $minat_investasi_list->StartRec > 1)
-		$minat_investasi_list->Recordset->Move($minat_investasi_list->StartRec - 1);
-} elseif (!$minat_investasi->AllowAddDeleteRow && $minat_investasi_list->StopRec == 0) {
-	$minat_investasi_list->StopRec = $minat_investasi->GridAddRowCount;
+$status_list->RecCnt = $status_list->StartRec - 1;
+if ($status_list->Recordset && !$status_list->Recordset->EOF) {
+	$status_list->Recordset->MoveFirst();
+	$bSelectLimit = $status_list->UseSelectLimit;
+	if (!$bSelectLimit && $status_list->StartRec > 1)
+		$status_list->Recordset->Move($status_list->StartRec - 1);
+} elseif (!$status->AllowAddDeleteRow && $status_list->StopRec == 0) {
+	$status_list->StopRec = $status->GridAddRowCount;
 }
 
 // Initialize aggregate
-$minat_investasi->RowType = EW_ROWTYPE_AGGREGATEINIT;
-$minat_investasi->ResetAttrs();
-$minat_investasi_list->RenderRow();
-while ($minat_investasi_list->RecCnt < $minat_investasi_list->StopRec) {
-	$minat_investasi_list->RecCnt++;
-	if (intval($minat_investasi_list->RecCnt) >= intval($minat_investasi_list->StartRec)) {
-		$minat_investasi_list->RowCnt++;
+$status->RowType = EW_ROWTYPE_AGGREGATEINIT;
+$status->ResetAttrs();
+$status_list->RenderRow();
+while ($status_list->RecCnt < $status_list->StopRec) {
+	$status_list->RecCnt++;
+	if (intval($status_list->RecCnt) >= intval($status_list->StartRec)) {
+		$status_list->RowCnt++;
 
 		// Set up key count
-		$minat_investasi_list->KeyCount = $minat_investasi_list->RowIndex;
+		$status_list->KeyCount = $status_list->RowIndex;
 
 		// Init row class and style
-		$minat_investasi->ResetAttrs();
-		$minat_investasi->CssClass = "";
-		if ($minat_investasi->CurrentAction == "gridadd") {
+		$status->ResetAttrs();
+		$status->CssClass = "";
+		if ($status->CurrentAction == "gridadd") {
 		} else {
-			$minat_investasi_list->LoadRowValues($minat_investasi_list->Recordset); // Load row values
+			$status_list->LoadRowValues($status_list->Recordset); // Load row values
 		}
-		$minat_investasi->RowType = EW_ROWTYPE_VIEW; // Render view
+		$status->RowType = EW_ROWTYPE_VIEW; // Render view
 
 		// Set up row id / data-rowindex
-		$minat_investasi->RowAttrs = array_merge($minat_investasi->RowAttrs, array('data-rowindex'=>$minat_investasi_list->RowCnt, 'id'=>'r' . $minat_investasi_list->RowCnt . '_minat_investasi', 'data-rowtype'=>$minat_investasi->RowType));
+		$status->RowAttrs = array_merge($status->RowAttrs, array('data-rowindex'=>$status_list->RowCnt, 'id'=>'r' . $status_list->RowCnt . '_status', 'data-rowtype'=>$status->RowType));
 
 		// Render row
-		$minat_investasi_list->RenderRow();
+		$status_list->RenderRow();
 
 		// Render list options
-		$minat_investasi_list->RenderListOptions();
+		$status_list->RenderListOptions();
 ?>
-	<tr<?php echo $minat_investasi->RowAttributes() ?>>
+	<tr<?php echo $status->RowAttributes() ?>>
 <?php
 
 // Render list options (body, left)
-$minat_investasi_list->ListOptions->Render("body", "left", $minat_investasi_list->RowCnt);
+$status_list->ListOptions->Render("body", "left", $status_list->RowCnt);
 ?>
-	<?php if ($minat_investasi->id_jenis->Visible) { // id_jenis ?>
-		<td data-name="id_jenis"<?php echo $minat_investasi->id_jenis->CellAttributes() ?>>
-<span id="el<?php echo $minat_investasi_list->RowCnt ?>_minat_investasi_id_jenis" class="minat_investasi_id_jenis">
-<span<?php echo $minat_investasi->id_jenis->ViewAttributes() ?>>
-<?php echo $minat_investasi->id_jenis->ListViewValue() ?></span>
+	<?php if ($status->id_status->Visible) { // id_status ?>
+		<td data-name="id_status"<?php echo $status->id_status->CellAttributes() ?>>
+<span id="el<?php echo $status_list->RowCnt ?>_status_id_status" class="status_id_status">
+<span<?php echo $status->id_status->ViewAttributes() ?>>
+<?php echo $status->id_status->ListViewValue() ?></span>
 </span>
-<a id="<?php echo $minat_investasi_list->PageObjName . "_row_" . $minat_investasi_list->RowCnt ?>"></a></td>
+<a id="<?php echo $status_list->PageObjName . "_row_" . $status_list->RowCnt ?>"></a></td>
 	<?php } ?>
-	<?php if ($minat_investasi->id_kecamatan->Visible) { // id_kecamatan ?>
-		<td data-name="id_kecamatan"<?php echo $minat_investasi->id_kecamatan->CellAttributes() ?>>
-<span id="el<?php echo $minat_investasi_list->RowCnt ?>_minat_investasi_id_kecamatan" class="minat_investasi_id_kecamatan">
-<span<?php echo $minat_investasi->id_kecamatan->ViewAttributes() ?>>
-<?php echo $minat_investasi->id_kecamatan->ListViewValue() ?></span>
-</span>
-</td>
-	<?php } ?>
-	<?php if ($minat_investasi->nib->Visible) { // nib ?>
-		<td data-name="nib"<?php echo $minat_investasi->nib->CellAttributes() ?>>
-<span id="el<?php echo $minat_investasi_list->RowCnt ?>_minat_investasi_nib" class="minat_investasi_nib">
-<span<?php echo $minat_investasi->nib->ViewAttributes() ?>>
-<?php echo $minat_investasi->nib->ListViewValue() ?></span>
-</span>
-</td>
-	<?php } ?>
-	<?php if ($minat_investasi->nama->Visible) { // nama ?>
-		<td data-name="nama"<?php echo $minat_investasi->nama->CellAttributes() ?>>
-<span id="el<?php echo $minat_investasi_list->RowCnt ?>_minat_investasi_nama" class="minat_investasi_nama">
-<span<?php echo $minat_investasi->nama->ViewAttributes() ?>>
-<?php echo $minat_investasi->nama->ListViewValue() ?></span>
-</span>
-</td>
-	<?php } ?>
-	<?php if ($minat_investasi->penanaman_modal->Visible) { // penanaman_modal ?>
-		<td data-name="penanaman_modal"<?php echo $minat_investasi->penanaman_modal->CellAttributes() ?>>
-<span id="el<?php echo $minat_investasi_list->RowCnt ?>_minat_investasi_penanaman_modal" class="minat_investasi_penanaman_modal">
-<span<?php echo $minat_investasi->penanaman_modal->ViewAttributes() ?>>
-<?php echo $minat_investasi->penanaman_modal->ListViewValue() ?></span>
-</span>
-</td>
-	<?php } ?>
-	<?php if ($minat_investasi->jenis_perusahaan->Visible) { // jenis_perusahaan ?>
-		<td data-name="jenis_perusahaan"<?php echo $minat_investasi->jenis_perusahaan->CellAttributes() ?>>
-<span id="el<?php echo $minat_investasi_list->RowCnt ?>_minat_investasi_jenis_perusahaan" class="minat_investasi_jenis_perusahaan">
-<span<?php echo $minat_investasi->jenis_perusahaan->ViewAttributes() ?>>
-<?php echo $minat_investasi->jenis_perusahaan->ListViewValue() ?></span>
-</span>
-</td>
-	<?php } ?>
-	<?php if ($minat_investasi->sysdate->Visible) { // sysdate ?>
-		<td data-name="sysdate"<?php echo $minat_investasi->sysdate->CellAttributes() ?>>
-<span id="el<?php echo $minat_investasi_list->RowCnt ?>_minat_investasi_sysdate" class="minat_investasi_sysdate">
-<span<?php echo $minat_investasi->sysdate->ViewAttributes() ?>>
-<?php echo $minat_investasi->sysdate->ListViewValue() ?></span>
+	<?php if ($status->status->Visible) { // status ?>
+		<td data-name="status"<?php echo $status->status->CellAttributes() ?>>
+<span id="el<?php echo $status_list->RowCnt ?>_status_status" class="status_status">
+<span<?php echo $status->status->ViewAttributes() ?>>
+<?php echo $status->status->ListViewValue() ?></span>
 </span>
 </td>
 	<?php } ?>
 <?php
 
 // Render list options (body, right)
-$minat_investasi_list->ListOptions->Render("body", "right", $minat_investasi_list->RowCnt);
+$status_list->ListOptions->Render("body", "right", $status_list->RowCnt);
 ?>
 	</tr>
 <?php
 	}
-	if ($minat_investasi->CurrentAction <> "gridadd")
-		$minat_investasi_list->Recordset->MoveNext();
+	if ($status->CurrentAction <> "gridadd")
+		$status_list->Recordset->MoveNext();
 }
 ?>
 </tbody>
 </table>
 <?php } ?>
-<?php if ($minat_investasi->CurrentAction == "") { ?>
+<?php if ($status->CurrentAction == "") { ?>
 <input type="hidden" name="a_list" id="a_list" value="">
 <?php } ?>
 </div>
@@ -2161,60 +1899,60 @@ $minat_investasi_list->ListOptions->Render("body", "right", $minat_investasi_lis
 <?php
 
 // Close recordset
-if ($minat_investasi_list->Recordset)
-	$minat_investasi_list->Recordset->Close();
+if ($status_list->Recordset)
+	$status_list->Recordset->Close();
 ?>
 <div class="panel-footer ewGridLowerPanel">
-<?php if ($minat_investasi->CurrentAction <> "gridadd" && $minat_investasi->CurrentAction <> "gridedit") { ?>
+<?php if ($status->CurrentAction <> "gridadd" && $status->CurrentAction <> "gridedit") { ?>
 <form name="ewPagerForm" class="ewForm form-inline ewPagerForm" action="<?php echo ew_CurrentPage() ?>">
-<?php if (!isset($minat_investasi_list->Pager)) $minat_investasi_list->Pager = new cPrevNextPager($minat_investasi_list->StartRec, $minat_investasi_list->DisplayRecs, $minat_investasi_list->TotalRecs) ?>
-<?php if ($minat_investasi_list->Pager->RecordCount > 0 && $minat_investasi_list->Pager->Visible) { ?>
+<?php if (!isset($status_list->Pager)) $status_list->Pager = new cPrevNextPager($status_list->StartRec, $status_list->DisplayRecs, $status_list->TotalRecs) ?>
+<?php if ($status_list->Pager->RecordCount > 0 && $status_list->Pager->Visible) { ?>
 <div class="text-center">
 <span><?php echo $Language->Phrase("Page") ?>&nbsp;</span>
 <div class="ewPrevNext"><div class="input-group">
 <div class="input-group-btn">
 <!--first page button-->
-	<?php if ($minat_investasi_list->Pager->FirstButton->Enabled) { ?>
-	<a class="btn btn-default btn-sm" title="<?php echo $Language->Phrase("PagerFirst") ?>" href="<?php echo $minat_investasi_list->PageUrl() ?>start=<?php echo $minat_investasi_list->Pager->FirstButton->Start ?>"><span class="fa fa-fast-backward"></span></a>
+	<?php if ($status_list->Pager->FirstButton->Enabled) { ?>
+	<a class="btn btn-default btn-sm" title="<?php echo $Language->Phrase("PagerFirst") ?>" href="<?php echo $status_list->PageUrl() ?>start=<?php echo $status_list->Pager->FirstButton->Start ?>"><span class="fa fa-fast-backward"></span></a>
 	<?php } else { ?>
 	<a class="btn btn-default btn-sm disabled" title="<?php echo $Language->Phrase("PagerFirst") ?>"><span class="fa fa-fast-backward"></span></a>
 	<?php } ?>
 <!--previous page button-->
-	<?php if ($minat_investasi_list->Pager->PrevButton->Enabled) { ?>
-	<a class="btn btn-default btn-sm" title="<?php echo $Language->Phrase("PagerPrevious") ?>" href="<?php echo $minat_investasi_list->PageUrl() ?>start=<?php echo $minat_investasi_list->Pager->PrevButton->Start ?>"><span class="fa fa-step-backward"></span></a>
+	<?php if ($status_list->Pager->PrevButton->Enabled) { ?>
+	<a class="btn btn-default btn-sm" title="<?php echo $Language->Phrase("PagerPrevious") ?>" href="<?php echo $status_list->PageUrl() ?>start=<?php echo $status_list->Pager->PrevButton->Start ?>"><span class="fa fa-step-backward"></span></a>
 	<?php } else { ?>
 	<a class="btn btn-default btn-sm disabled" title="<?php echo $Language->Phrase("PagerPrevious") ?>"><span class="fa fa-step-backward"></span></a>
 	<?php } ?>
 </div>
 <!--current page number-->
-	<input class="form-control input-sm" type="text" name="<?php echo EW_TABLE_PAGE_NO ?>" value="<?php echo $minat_investasi_list->Pager->CurrentPage ?>">
+	<input class="form-control input-sm" type="text" name="<?php echo EW_TABLE_PAGE_NO ?>" value="<?php echo $status_list->Pager->CurrentPage ?>">
 <div class="input-group-btn">
 <!--next page button-->
-	<?php if ($minat_investasi_list->Pager->NextButton->Enabled) { ?>
-	<a class="btn btn-default btn-sm" title="<?php echo $Language->Phrase("PagerNext") ?>" href="<?php echo $minat_investasi_list->PageUrl() ?>start=<?php echo $minat_investasi_list->Pager->NextButton->Start ?>"><span class="fa fa-step-forward"></span></a>
+	<?php if ($status_list->Pager->NextButton->Enabled) { ?>
+	<a class="btn btn-default btn-sm" title="<?php echo $Language->Phrase("PagerNext") ?>" href="<?php echo $status_list->PageUrl() ?>start=<?php echo $status_list->Pager->NextButton->Start ?>"><span class="fa fa-step-forward"></span></a>
 	<?php } else { ?>
 	<a class="btn btn-default btn-sm disabled" title="<?php echo $Language->Phrase("PagerNext") ?>"><span class="fa fa-step-forward"></span></a>
 	<?php } ?>
 <!--last page button-->
-	<?php if ($minat_investasi_list->Pager->LastButton->Enabled) { ?>
-	<a class="btn btn-default btn-sm" title="<?php echo $Language->Phrase("PagerLast") ?>" href="<?php echo $minat_investasi_list->PageUrl() ?>start=<?php echo $minat_investasi_list->Pager->LastButton->Start ?>"><span class="fa fa-fast-forward"></span></a>
+	<?php if ($status_list->Pager->LastButton->Enabled) { ?>
+	<a class="btn btn-default btn-sm" title="<?php echo $Language->Phrase("PagerLast") ?>" href="<?php echo $status_list->PageUrl() ?>start=<?php echo $status_list->Pager->LastButton->Start ?>"><span class="fa fa-fast-forward"></span></a>
 	<?php } else { ?>
 	<a class="btn btn-default btn-sm disabled" title="<?php echo $Language->Phrase("PagerLast") ?>"><span class="fa fa-fast-forward"></span></a>
 	<?php } ?>
 </div>
 </div>
 </div>
-<span>&nbsp;<?php echo $Language->Phrase("of") ?>&nbsp;<?php echo $minat_investasi_list->Pager->PageCount ?></span>
+<span>&nbsp;<?php echo $Language->Phrase("of") ?>&nbsp;<?php echo $status_list->Pager->PageCount ?></span>
 </div>
 <div class="text-center">
-	<span><?php echo $Language->Phrase("Record") ?>&nbsp;<?php echo $minat_investasi_list->Pager->FromIndex ?>&nbsp;<?php echo $Language->Phrase("To") ?>&nbsp;<?php echo $minat_investasi_list->Pager->ToIndex ?>&nbsp;<?php echo $Language->Phrase("Of") ?>&nbsp;<?php echo $minat_investasi_list->Pager->RecordCount ?></span>
+	<span><?php echo $Language->Phrase("Record") ?>&nbsp;<?php echo $status_list->Pager->FromIndex ?>&nbsp;<?php echo $Language->Phrase("To") ?>&nbsp;<?php echo $status_list->Pager->ToIndex ?>&nbsp;<?php echo $Language->Phrase("Of") ?>&nbsp;<?php echo $status_list->Pager->RecordCount ?></span>
 </div>
 <?php } ?>
 </form>
 <?php } ?>
 <div class="ewListOtherOptions">
 <?php
-	foreach ($minat_investasi_list->OtherOptions as &$option)
+	foreach ($status_list->OtherOptions as &$option)
 		$option->Render("body", "bottom");
 ?>
 </div>
@@ -2222,10 +1960,10 @@ if ($minat_investasi_list->Recordset)
 </div>
 </div>
 <?php } ?>
-<?php if ($minat_investasi_list->TotalRecs == 0 && $minat_investasi->CurrentAction == "") { // Show other options ?>
+<?php if ($status_list->TotalRecs == 0 && $status->CurrentAction == "") { // Show other options ?>
 <div class="ewListOtherOptions">
 <?php
-	foreach ($minat_investasi_list->OtherOptions as &$option) {
+	foreach ($status_list->OtherOptions as &$option) {
 		$option->ButtonClass = "";
 		$option->Render("body", "");
 	}
@@ -2234,12 +1972,12 @@ if ($minat_investasi_list->Recordset)
 <div class="clearfix"></div>
 <?php } ?>
 <script type="text/javascript">
-fminat_investasilistsrch.FilterList = <?php echo $minat_investasi_list->GetFilterList() ?>;
-fminat_investasilistsrch.Init();
-fminat_investasilist.Init();
+fstatuslistsrch.FilterList = <?php echo $status_list->GetFilterList() ?>;
+fstatuslistsrch.Init();
+fstatuslist.Init();
 </script>
 <?php
-$minat_investasi_list->ShowPageFooter();
+$status_list->ShowPageFooter();
 if (EW_DEBUG_ENABLED)
 	echo ew_DebugMsg();
 ?>
@@ -2251,5 +1989,5 @@ if (EW_DEBUG_ENABLED)
 </script>
 <?php include_once "footer.php" ?>
 <?php
-$minat_investasi_list->Page_Terminate();
+$status_list->Page_Terminate();
 ?>

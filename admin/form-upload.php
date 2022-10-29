@@ -311,9 +311,19 @@ $form2Dupload_php->ShowMessage();
 ?>
 </div>
 <?php } ?>
+<div class="callout callout-info">
+		<h4>Catatan!</h4>
+		Silahkan download format dengan jenis format .xls
+	<br><br>
+		<a href="import/format-minat.xls" class="btn btn-success">Download Format</a>
+		<a href="import/kode-master.xlsx" class="btn btn-warning">Download Kode Master</a>
+		</div>
+
 <form class="form-horizontal ewForm ewAddForm" action="upload_aksi.php" method="POST" enctype="multipart/form-data">
+
 <div>
 	<div id="r_nib" class="form-group">
+
 		<label id="elh_cv_minat_nib" class="col-sm-2 control-label ewLabel">Data Excel</label>
 		<div class="col-sm-10"><div>
 <span id="el_cv_minat_nib">
@@ -336,7 +346,7 @@ $form2Dupload_php->ShowMessage();
 <div class="form-group">
 	<div class="col-sm-offset-2 col-sm-10">
 <button class="btn btn-primary ewButton" name="submit" id="btnAction" type="submit" value="submit">Tambah</button>
-<button class="btn btn-default ewButton" name="btnCancel" id="btnCancel" type="cancel">Batal</button>
+
 	</div>
 </div>
 </form>

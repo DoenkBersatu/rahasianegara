@@ -1139,7 +1139,7 @@ class cBreadcrumb {
 	// Constructor
 	function __construct() {
 		global $Language;
-		$this->Links[] = array("home", "HomePage", "index.php", "ewHome", "", FALSE); // Home
+		$this->Links[] = array("home", "HomePage", "minat_investasilist.php", "ewHome", "", FALSE); // Home
 	}
 
 	// Check if an item exists

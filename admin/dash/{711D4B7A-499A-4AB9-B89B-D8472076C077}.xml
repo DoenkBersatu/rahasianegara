@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<configuration date="2022/10/25" author="e.World Technology Ltd.">
-  <project id="{711D4B7A-499A-4AB9-B89B-D8472076C077}" file="D:\xampp5637\htdocs\rahasianegara\dash\dash.pmp" name="dash" product="PHPMaker" version="13.0" datetime="2022/10/25 14:33:45" languagefolder="phplang" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0">
+<configuration date="2022/10/29" author="e.World Technology Ltd.">
+  <project id="{711D4B7A-499A-4AB9-B89B-D8472076C077}" file="C:\Users\ACER\OneDrive\Documents\PHPMaker\Projects\dash.pmp" name="dash" product="PHPMaker" version="13.0" datetime="2022/10/29 16:53:13" languagefolder="phplang" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0">
     <table id="jenis" name="jenis" caption="jenis" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
     <table id="kecamatan" name="kecamatan" caption="kecamatan" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
     <table id="minat_investasi" name="minat_investasi" caption="minat investasi" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
@@ -12,10 +12,10 @@
     <table id="user" name="user" caption="user" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
     <table id="userlevelpermissions" name="userlevelpermissions" caption="userlevelpermissions" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
     <table id="userlevels" name="userlevels" caption="userlevels" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
-    <table id="jenis_perusahaan" name="jenis_perusahaan" caption="jenis perusahaan" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
-    <table id="status" name="status" caption="status" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
     <table id="form2Dupload_php" name="form-upload.php" caption="Upload Data Minat Investasi" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
     <table id="upload_aksi_php" name="upload_aksi.php" caption="" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
     <table id="koneksi_php" name="koneksi.php" caption="koneksi.php" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
+    <table id="jenis_perusahaan" name="jenis_perusahaan" caption="jenis perusahaan" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
+    <table id="status" name="status" caption="status" userlevel="-2,&quot;Anonymous&quot;,0;0,&quot;Default&quot;,0" priv="1" />
   </project>
 </configuration>

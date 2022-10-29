@@ -266,12 +266,12 @@ class cdefault {
 			$this->setFailureMessage($Language->Phrase("SessionExpired"));
 		if (!$Security->IsLoggedIn()) $Security->AutoLogin();
 		$Security->LoadUserLevel(); // Load User Level
+		if ($Security->AllowList(CurrentProjectID() . 'minat_investasi'))
+		$this->Page_Terminate("minat_investasilist.php"); // Exit and go to default page
 		if ($Security->AllowList(CurrentProjectID() . 'jenis'))
-		$this->Page_Terminate("jenislist.php"); // Exit and go to default page
+			$this->Page_Terminate("jenislist.php");
 		if ($Security->AllowList(CurrentProjectID() . 'kecamatan'))
 			$this->Page_Terminate("kecamatanlist.php");
-		if ($Security->AllowList(CurrentProjectID() . 'minat_investasi'))
-			$this->Page_Terminate("minat_investasilist.php");
 		if ($Security->AllowList(CurrentProjectID() . 'penyerapan_tk'))
 			$this->Page_Terminate("penyerapan_tklist.php");
 		if ($Security->AllowList(CurrentProjectID() . 'realisasi_investasi'))
@@ -292,6 +292,10 @@ class cdefault {
 			$this->Page_Terminate("upload_aksi.php");
 		if ($Security->AllowList(CurrentProjectID() . 'koneksi.php'))
 			$this->Page_Terminate("koneksi.php");
+		if ($Security->AllowList(CurrentProjectID() . 'jenis_perusahaan'))
+			$this->Page_Terminate("jenis_perusahaanlist.php");
+		if ($Security->AllowList(CurrentProjectID() . 'status'))
+			$this->Page_Terminate("statuslist.php");
 		if ($Security->IsLoggedIn()) {
 			$this->setFailureMessage(ew_DeniedMsg() . "<br><br><a href=\"logout.php\">" . $Language->Phrase("BackToLogin") . "</a>");
 		} else {

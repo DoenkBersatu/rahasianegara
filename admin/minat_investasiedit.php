@@ -287,12 +287,12 @@ class cminat_investasi_edit extends cminat_investasi {
 		$this->CurrentAction = (@$_GET["a"] <> "") ? $_GET["a"] : @$_POST["a_list"]; // Set up current action
 		$this->id_minat_investasi->SetVisibility();
 		$this->id_minat_investasi->Visible = !$this->IsAdd() && !$this->IsCopy() && !$this->IsGridAdd();
+		$this->id_jenis->SetVisibility();
+		$this->id_kecamatan->SetVisibility();
 		$this->nib->SetVisibility();
 		$this->nama->SetVisibility();
 		$this->penanaman_modal->SetVisibility();
 		$this->jenis_perusahaan->SetVisibility();
-		$this->id_jenis->SetVisibility();
-		$this->id_kecamatan->SetVisibility();
 		$this->sysdate->SetVisibility();
 
 		// Global Page Loading event (in userfn*.php)
@@ -503,6 +503,12 @@ class cminat_investasi_edit extends cminat_investasi {
 		global $objForm;
 		if (!$this->id_minat_investasi->FldIsDetailKey)
 			$this->id_minat_investasi->setFormValue($objForm->GetValue("x_id_minat_investasi"));
+		if (!$this->id_jenis->FldIsDetailKey) {
+			$this->id_jenis->setFormValue($objForm->GetValue("x_id_jenis"));
+		}
+		if (!$this->id_kecamatan->FldIsDetailKey) {
+			$this->id_kecamatan->setFormValue($objForm->GetValue("x_id_kecamatan"));
+		}
 		if (!$this->nib->FldIsDetailKey) {
 			$this->nib->setFormValue($objForm->GetValue("x_nib"));
 		}
@@ -515,12 +521,6 @@ class cminat_investasi_edit extends cminat_investasi {
 		if (!$this->jenis_perusahaan->FldIsDetailKey) {
 			$this->jenis_perusahaan->setFormValue($objForm->GetValue("x_jenis_perusahaan"));
 		}
-		if (!$this->id_jenis->FldIsDetailKey) {
-			$this->id_jenis->setFormValue($objForm->GetValue("x_id_jenis"));
-		}
-		if (!$this->id_kecamatan->FldIsDetailKey) {
-			$this->id_kecamatan->setFormValue($objForm->GetValue("x_id_kecamatan"));
-		}
 		if (!$this->sysdate->FldIsDetailKey) {
 			$this->sysdate->setFormValue($objForm->GetValue("x_sysdate"));
 			$this->sysdate->CurrentValue = ew_UnFormatDateTime($this->sysdate->CurrentValue, 0);
@@ -532,12 +532,12 @@ class cminat_investasi_edit extends cminat_investasi {
 		global $objForm;
 		$this->LoadRow();
 		$this->id_minat_investasi->CurrentValue = $this->id_minat_investasi->FormValue;
+		$this->id_jenis->CurrentValue = $this->id_jenis->FormValue;
+		$this->id_kecamatan->CurrentValue = $this->id_kecamatan->FormValue;
 		$this->nib->CurrentValue = $this->nib->FormValue;
 		$this->nama->CurrentValue = $this->nama->FormValue;
 		$this->penanaman_modal->CurrentValue = $this->penanaman_modal->FormValue;
 		$this->jenis_perusahaan->CurrentValue = $this->jenis_perusahaan->FormValue;
-		$this->id_jenis->CurrentValue = $this->id_jenis->FormValue;
-		$this->id_kecamatan->CurrentValue = $this->id_kecamatan->FormValue;
 		$this->sysdate->CurrentValue = $this->sysdate->FormValue;
 		$this->sysdate->CurrentValue = ew_UnFormatDateTime($this->sysdate->CurrentValue, 0);
 	}
@@ -572,12 +572,12 @@ class cminat_investasi_edit extends cminat_investasi {
 		$row = &$rs->fields;
 		$this->Row_Selected($row);
 		$this->id_minat_investasi->setDbValue($rs->fields('id_minat_investasi'));
+		$this->id_jenis->setDbValue($rs->fields('id_jenis'));
+		$this->id_kecamatan->setDbValue($rs->fields('id_kecamatan'));
 		$this->nib->setDbValue($rs->fields('nib'));
 		$this->nama->setDbValue($rs->fields('nama'));
 		$this->penanaman_modal->setDbValue($rs->fields('penanaman_modal'));
 		$this->jenis_perusahaan->setDbValue($rs->fields('jenis_perusahaan'));
-		$this->id_jenis->setDbValue($rs->fields('id_jenis'));
-		$this->id_kecamatan->setDbValue($rs->fields('id_kecamatan'));
 		$this->sysdate->setDbValue($rs->fields('sysdate'));
 	}
 
@@ -586,12 +586,12 @@ class cminat_investasi_edit extends cminat_investasi {
 		if (!$rs || !is_array($rs) && $rs->EOF) return;
 		$row = is_array($rs) ? $rs : $rs->fields;
 		$this->id_minat_investasi->DbValue = $row['id_minat_investasi'];
+		$this->id_jenis->DbValue = $row['id_jenis'];
+		$this->id_kecamatan->DbValue = $row['id_kecamatan'];
 		$this->nib->DbValue = $row['nib'];
 		$this->nama->DbValue = $row['nama'];
 		$this->penanaman_modal->DbValue = $row['penanaman_modal'];
 		$this->jenis_perusahaan->DbValue = $row['jenis_perusahaan'];
-		$this->id_jenis->DbValue = $row['id_jenis'];
-		$this->id_kecamatan->DbValue = $row['id_kecamatan'];
 		$this->sysdate->DbValue = $row['sysdate'];
 	}
 
@@ -606,12 +606,12 @@ class cminat_investasi_edit extends cminat_investasi {
 
 		// Common render codes for all row types
 		// id_minat_investasi
+		// id_jenis
+		// id_kecamatan
 		// nib
 		// nama
 		// penanaman_modal
 		// jenis_perusahaan
-		// id_jenis
-		// id_kecamatan
 		// sysdate
 
 		if ($this->RowType == EW_ROWTYPE_VIEW) { // View row
@@ -619,60 +619,6 @@ class cminat_investasi_edit extends cminat_investasi {
 		// id_minat_investasi
 		$this->id_minat_investasi->ViewValue = $this->id_minat_investasi->CurrentValue;
 		$this->id_minat_investasi->ViewCustomAttributes = "";
-
-		// nib
-		$this->nib->ViewValue = $this->nib->CurrentValue;
-		$this->nib->ViewCustomAttributes = "";
-
-		// nama
-		$this->nama->ViewValue = $this->nama->CurrentValue;
-		$this->nama->ViewCustomAttributes = "";
-
-		// penanaman_modal
-		if (strval($this->penanaman_modal->CurrentValue) <> "") {
-			$sFilterWrk = "`id_status`" . ew_SearchString("=", $this->penanaman_modal->CurrentValue, EW_DATATYPE_NUMBER, "");
-		$sSqlWrk = "SELECT `id_status`, `status` AS `DispFld`, '' AS `Disp2Fld`, '' AS `Disp3Fld`, '' AS `Disp4Fld` FROM `status`";
-		$sWhereWrk = "";
-		$this->penanaman_modal->LookupFilters = array();
-		ew_AddFilter($sWhereWrk, $sFilterWrk);
-		$this->Lookup_Selecting($this->penanaman_modal, $sWhereWrk); // Call Lookup selecting
-		if ($sWhereWrk <> "") $sSqlWrk .= " WHERE " . $sWhereWrk;
-			$rswrk = Conn()->Execute($sSqlWrk);
-			if ($rswrk && !$rswrk->EOF) { // Lookup values found
-				$arwrk = array();
-				$arwrk[1] = $rswrk->fields('DispFld');
-				$this->penanaman_modal->ViewValue = $this->penanaman_modal->DisplayValue($arwrk);
-				$rswrk->Close();
-			} else {
-				$this->penanaman_modal->ViewValue = $this->penanaman_modal->CurrentValue;
-			}
-		} else {
-			$this->penanaman_modal->ViewValue = NULL;
-		}
-		$this->penanaman_modal->ViewCustomAttributes = "";
-
-		// jenis_perusahaan
-		if (strval($this->jenis_perusahaan->CurrentValue) <> "") {
-			$sFilterWrk = "`id_jp`" . ew_SearchString("=", $this->jenis_perusahaan->CurrentValue, EW_DATATYPE_NUMBER, "");
-		$sSqlWrk = "SELECT `id_jp`, `jenis_perusahaan` AS `DispFld`, '' AS `Disp2Fld`, '' AS `Disp3Fld`, '' AS `Disp4Fld` FROM `jenis_perusahaan`";
-		$sWhereWrk = "";
-		$this->jenis_perusahaan->LookupFilters = array();
-		ew_AddFilter($sWhereWrk, $sFilterWrk);
-		$this->Lookup_Selecting($this->jenis_perusahaan, $sWhereWrk); // Call Lookup selecting
-		if ($sWhereWrk <> "") $sSqlWrk .= " WHERE " . $sWhereWrk;
-			$rswrk = Conn()->Execute($sSqlWrk);
-			if ($rswrk && !$rswrk->EOF) { // Lookup values found
-				$arwrk = array();
-				$arwrk[1] = $rswrk->fields('DispFld');
-				$this->jenis_perusahaan->ViewValue = $this->jenis_perusahaan->DisplayValue($arwrk);
-				$rswrk->Close();
-			} else {
-				$this->jenis_perusahaan->ViewValue = $this->jenis_perusahaan->CurrentValue;
-			}
-		} else {
-			$this->jenis_perusahaan->ViewValue = NULL;
-		}
-		$this->jenis_perusahaan->ViewCustomAttributes = "";
 
 		// id_jenis
 		if (strval($this->id_jenis->CurrentValue) <> "") {
@@ -720,6 +666,22 @@ class cminat_investasi_edit extends cminat_investasi {
 		}
 		$this->id_kecamatan->ViewCustomAttributes = "";
 
+		// nib
+		$this->nib->ViewValue = $this->nib->CurrentValue;
+		$this->nib->ViewCustomAttributes = "";
+
+		// nama
+		$this->nama->ViewValue = $this->nama->CurrentValue;
+		$this->nama->ViewCustomAttributes = "";
+
+		// penanaman_modal
+		$this->penanaman_modal->ViewValue = $this->penanaman_modal->CurrentValue;
+		$this->penanaman_modal->ViewCustomAttributes = "";
+
+		// jenis_perusahaan
+		$this->jenis_perusahaan->ViewValue = $this->jenis_perusahaan->CurrentValue;
+		$this->jenis_perusahaan->ViewCustomAttributes = "";
+
 		// sysdate
 		$this->sysdate->ViewValue = $this->sysdate->CurrentValue;
 		$this->sysdate->ViewValue = ew_FormatDateTime($this->sysdate->ViewValue, 0);
@@ -729,6 +691,16 @@ class cminat_investasi_edit extends cminat_investasi {
 			$this->id_minat_investasi->LinkCustomAttributes = "";
 			$this->id_minat_investasi->HrefValue = "";
 			$this->id_minat_investasi->TooltipValue = "";
+
+			// id_jenis
+			$this->id_jenis->LinkCustomAttributes = "";
+			$this->id_jenis->HrefValue = "";
+			$this->id_jenis->TooltipValue = "";
+
+			// id_kecamatan
+			$this->id_kecamatan->LinkCustomAttributes = "";
+			$this->id_kecamatan->HrefValue = "";
+			$this->id_kecamatan->TooltipValue = "";
 
 			// nib
 			$this->nib->LinkCustomAttributes = "";
@@ -750,16 +722,6 @@ class cminat_investasi_edit extends cminat_investasi {
 			$this->jenis_perusahaan->HrefValue = "";
 			$this->jenis_perusahaan->TooltipValue = "";
 
-			// id_jenis
-			$this->id_jenis->LinkCustomAttributes = "";
-			$this->id_jenis->HrefValue = "";
-			$this->id_jenis->TooltipValue = "";
-
-			// id_kecamatan
-			$this->id_kecamatan->LinkCustomAttributes = "";
-			$this->id_kecamatan->HrefValue = "";
-			$this->id_kecamatan->TooltipValue = "";
-
 			// sysdate
 			$this->sysdate->LinkCustomAttributes = "";
 			$this->sysdate->HrefValue = "";
@@ -771,56 +733,6 @@ class cminat_investasi_edit extends cminat_investasi {
 			$this->id_minat_investasi->EditCustomAttributes = "";
 			$this->id_minat_investasi->EditValue = $this->id_minat_investasi->CurrentValue;
 			$this->id_minat_investasi->ViewCustomAttributes = "";
-
-			// nib
-			$this->nib->EditAttrs["class"] = "form-control";
-			$this->nib->EditCustomAttributes = "";
-			$this->nib->EditValue = ew_HtmlEncode($this->nib->CurrentValue);
-			$this->nib->PlaceHolder = ew_RemoveHtml($this->nib->FldCaption());
-
-			// nama
-			$this->nama->EditAttrs["class"] = "form-control";
-			$this->nama->EditCustomAttributes = "";
-			$this->nama->EditValue = ew_HtmlEncode($this->nama->CurrentValue);
-			$this->nama->PlaceHolder = ew_RemoveHtml($this->nama->FldCaption());
-
-			// penanaman_modal
-			$this->penanaman_modal->EditAttrs["class"] = "form-control";
-			$this->penanaman_modal->EditCustomAttributes = "";
-			if (trim(strval($this->penanaman_modal->CurrentValue)) == "") {
-				$sFilterWrk = "0=1";
-			} else {
-				$sFilterWrk = "`id_status`" . ew_SearchString("=", $this->penanaman_modal->CurrentValue, EW_DATATYPE_NUMBER, "");
-			}
-			$sSqlWrk = "SELECT `id_status`, `status` AS `DispFld`, '' AS `Disp2Fld`, '' AS `Disp3Fld`, '' AS `Disp4Fld`, '' AS `SelectFilterFld`, '' AS `SelectFilterFld2`, '' AS `SelectFilterFld3`, '' AS `SelectFilterFld4` FROM `status`";
-			$sWhereWrk = "";
-			$this->penanaman_modal->LookupFilters = array();
-			ew_AddFilter($sWhereWrk, $sFilterWrk);
-			$this->Lookup_Selecting($this->penanaman_modal, $sWhereWrk); // Call Lookup selecting
-			if ($sWhereWrk <> "") $sSqlWrk .= " WHERE " . $sWhereWrk;
-			$rswrk = Conn()->Execute($sSqlWrk);
-			$arwrk = ($rswrk) ? $rswrk->GetRows() : array();
-			if ($rswrk) $rswrk->Close();
-			$this->penanaman_modal->EditValue = $arwrk;
-
-			// jenis_perusahaan
-			$this->jenis_perusahaan->EditAttrs["class"] = "form-control";
-			$this->jenis_perusahaan->EditCustomAttributes = "";
-			if (trim(strval($this->jenis_perusahaan->CurrentValue)) == "") {
-				$sFilterWrk = "0=1";
-			} else {
-				$sFilterWrk = "`id_jp`" . ew_SearchString("=", $this->jenis_perusahaan->CurrentValue, EW_DATATYPE_NUMBER, "");
-			}
-			$sSqlWrk = "SELECT `id_jp`, `jenis_perusahaan` AS `DispFld`, '' AS `Disp2Fld`, '' AS `Disp3Fld`, '' AS `Disp4Fld`, '' AS `SelectFilterFld`, '' AS `SelectFilterFld2`, '' AS `SelectFilterFld3`, '' AS `SelectFilterFld4` FROM `jenis_perusahaan`";
-			$sWhereWrk = "";
-			$this->jenis_perusahaan->LookupFilters = array();
-			ew_AddFilter($sWhereWrk, $sFilterWrk);
-			$this->Lookup_Selecting($this->jenis_perusahaan, $sWhereWrk); // Call Lookup selecting
-			if ($sWhereWrk <> "") $sSqlWrk .= " WHERE " . $sWhereWrk;
-			$rswrk = Conn()->Execute($sSqlWrk);
-			$arwrk = ($rswrk) ? $rswrk->GetRows() : array();
-			if ($rswrk) $rswrk->Close();
-			$this->jenis_perusahaan->EditValue = $arwrk;
 
 			// id_jenis
 			$this->id_jenis->EditAttrs["class"] = "form-control";
@@ -860,6 +772,30 @@ class cminat_investasi_edit extends cminat_investasi {
 			if ($rswrk) $rswrk->Close();
 			$this->id_kecamatan->EditValue = $arwrk;
 
+			// nib
+			$this->nib->EditAttrs["class"] = "form-control";
+			$this->nib->EditCustomAttributes = "";
+			$this->nib->EditValue = ew_HtmlEncode($this->nib->CurrentValue);
+			$this->nib->PlaceHolder = ew_RemoveHtml($this->nib->FldCaption());
+
+			// nama
+			$this->nama->EditAttrs["class"] = "form-control";
+			$this->nama->EditCustomAttributes = "";
+			$this->nama->EditValue = ew_HtmlEncode($this->nama->CurrentValue);
+			$this->nama->PlaceHolder = ew_RemoveHtml($this->nama->FldCaption());
+
+			// penanaman_modal
+			$this->penanaman_modal->EditAttrs["class"] = "form-control";
+			$this->penanaman_modal->EditCustomAttributes = "";
+			$this->penanaman_modal->EditValue = ew_HtmlEncode($this->penanaman_modal->CurrentValue);
+			$this->penanaman_modal->PlaceHolder = ew_RemoveHtml($this->penanaman_modal->FldCaption());
+
+			// jenis_perusahaan
+			$this->jenis_perusahaan->EditAttrs["class"] = "form-control";
+			$this->jenis_perusahaan->EditCustomAttributes = "";
+			$this->jenis_perusahaan->EditValue = ew_HtmlEncode($this->jenis_perusahaan->CurrentValue);
+			$this->jenis_perusahaan->PlaceHolder = ew_RemoveHtml($this->jenis_perusahaan->FldCaption());
+
 			// sysdate
 			$this->sysdate->EditAttrs["class"] = "form-control";
 			$this->sysdate->EditCustomAttributes = "";
@@ -871,6 +807,14 @@ class cminat_investasi_edit extends cminat_investasi {
 
 			$this->id_minat_investasi->LinkCustomAttributes = "";
 			$this->id_minat_investasi->HrefValue = "";
+
+			// id_jenis
+			$this->id_jenis->LinkCustomAttributes = "";
+			$this->id_jenis->HrefValue = "";
+
+			// id_kecamatan
+			$this->id_kecamatan->LinkCustomAttributes = "";
+			$this->id_kecamatan->HrefValue = "";
 
 			// nib
 			$this->nib->LinkCustomAttributes = "";
@@ -887,14 +831,6 @@ class cminat_investasi_edit extends cminat_investasi {
 			// jenis_perusahaan
 			$this->jenis_perusahaan->LinkCustomAttributes = "";
 			$this->jenis_perusahaan->HrefValue = "";
-
-			// id_jenis
-			$this->id_jenis->LinkCustomAttributes = "";
-			$this->id_jenis->HrefValue = "";
-
-			// id_kecamatan
-			$this->id_kecamatan->LinkCustomAttributes = "";
-			$this->id_kecamatan->HrefValue = "";
 
 			// sysdate
 			$this->sysdate->LinkCustomAttributes = "";
@@ -926,6 +862,12 @@ class cminat_investasi_edit extends cminat_investasi {
 		}
 		if (!$this->id_kecamatan->FldIsDetailKey && !is_null($this->id_kecamatan->FormValue) && $this->id_kecamatan->FormValue == "") {
 			ew_AddMessage($gsFormError, str_replace("%s", $this->id_kecamatan->FldCaption(), $this->id_kecamatan->ReqErrMsg));
+		}
+		if (!ew_CheckInteger($this->penanaman_modal->FormValue)) {
+			ew_AddMessage($gsFormError, $this->penanaman_modal->FldErrMsg());
+		}
+		if (!ew_CheckInteger($this->jenis_perusahaan->FormValue)) {
+			ew_AddMessage($gsFormError, $this->jenis_perusahaan->FldErrMsg());
 		}
 		if (!ew_CheckDateDef($this->sysdate->FormValue)) {
 			ew_AddMessage($gsFormError, $this->sysdate->FldErrMsg());
@@ -966,6 +908,12 @@ class cminat_investasi_edit extends cminat_investasi {
 			$this->LoadDbValues($rsold);
 			$rsnew = array();
 
+			// id_jenis
+			$this->id_jenis->SetDbValueDef($rsnew, $this->id_jenis->CurrentValue, 0, $this->id_jenis->ReadOnly);
+
+			// id_kecamatan
+			$this->id_kecamatan->SetDbValueDef($rsnew, $this->id_kecamatan->CurrentValue, 0, $this->id_kecamatan->ReadOnly);
+
 			// nib
 			$this->nib->SetDbValueDef($rsnew, $this->nib->CurrentValue, NULL, $this->nib->ReadOnly);
 
@@ -977,12 +925,6 @@ class cminat_investasi_edit extends cminat_investasi {
 
 			// jenis_perusahaan
 			$this->jenis_perusahaan->SetDbValueDef($rsnew, $this->jenis_perusahaan->CurrentValue, NULL, $this->jenis_perusahaan->ReadOnly);
-
-			// id_jenis
-			$this->id_jenis->SetDbValueDef($rsnew, $this->id_jenis->CurrentValue, 0, $this->id_jenis->ReadOnly);
-
-			// id_kecamatan
-			$this->id_kecamatan->SetDbValueDef($rsnew, $this->id_kecamatan->CurrentValue, 0, $this->id_kecamatan->ReadOnly);
 
 			// sysdate
 			$this->sysdate->SetDbValueDef($rsnew, ew_UnFormatDateTime($this->sysdate->CurrentValue, 0), NULL, $this->sysdate->ReadOnly);
@@ -1034,30 +976,6 @@ class cminat_investasi_edit extends cminat_investasi {
 		global $gsLanguage;
 		$pageId = $pageId ?: $this->PageID;
 		switch ($fld->FldVar) {
-		case "x_penanaman_modal":
-			$sSqlWrk = "";
-			$sSqlWrk = "SELECT `id_status` AS `LinkFld`, `status` AS `DispFld`, '' AS `Disp2Fld`, '' AS `Disp3Fld`, '' AS `Disp4Fld` FROM `status`";
-			$sWhereWrk = "";
-			$this->penanaman_modal->LookupFilters = array();
-			$fld->LookupFilters += array("s" => $sSqlWrk, "d" => "", "f0" => '`id_status` = {filter_value}', "t0" => "3", "fn0" => "");
-			$sSqlWrk = "";
-			$this->Lookup_Selecting($this->penanaman_modal, $sWhereWrk); // Call Lookup selecting
-			if ($sWhereWrk <> "") $sSqlWrk .= " WHERE " . $sWhereWrk;
-			if ($sSqlWrk <> "")
-				$fld->LookupFilters["s"] .= $sSqlWrk;
-			break;
-		case "x_jenis_perusahaan":
-			$sSqlWrk = "";
-			$sSqlWrk = "SELECT `id_jp` AS `LinkFld`, `jenis_perusahaan` AS `DispFld`, '' AS `Disp2Fld`, '' AS `Disp3Fld`, '' AS `Disp4Fld` FROM `jenis_perusahaan`";
-			$sWhereWrk = "";
-			$this->jenis_perusahaan->LookupFilters = array();
-			$fld->LookupFilters += array("s" => $sSqlWrk, "d" => "", "f0" => '`id_jp` = {filter_value}', "t0" => "3", "fn0" => "");
-			$sSqlWrk = "";
-			$this->Lookup_Selecting($this->jenis_perusahaan, $sWhereWrk); // Call Lookup selecting
-			if ($sWhereWrk <> "") $sSqlWrk .= " WHERE " . $sWhereWrk;
-			if ($sSqlWrk <> "")
-				$fld->LookupFilters["s"] .= $sSqlWrk;
-			break;
 		case "x_id_jenis":
 			$sSqlWrk = "";
 			$sSqlWrk = "SELECT `id_jenis` AS `LinkFld`, `jenis` AS `DispFld`, '' AS `Disp2Fld`, '' AS `Disp3Fld`, '' AS `Disp4Fld` FROM `jenis`";
@@ -1207,6 +1125,12 @@ fminat_investasiedit.Validate = function() {
 			elm = this.GetElements("x" + infix + "_id_kecamatan");
 			if (elm && !ew_IsHidden(elm) && !ew_HasValue(elm))
 				return this.OnError(elm, "<?php echo ew_JsEncode2(str_replace("%s", $minat_investasi->id_kecamatan->FldCaption(), $minat_investasi->id_kecamatan->ReqErrMsg)) ?>");
+			elm = this.GetElements("x" + infix + "_penanaman_modal");
+			if (elm && !ew_CheckInteger(elm.value))
+				return this.OnError(elm, "<?php echo ew_JsEncode2($minat_investasi->penanaman_modal->FldErrMsg()) ?>");
+			elm = this.GetElements("x" + infix + "_jenis_perusahaan");
+			if (elm && !ew_CheckInteger(elm.value))
+				return this.OnError(elm, "<?php echo ew_JsEncode2($minat_investasi->jenis_perusahaan->FldErrMsg()) ?>");
 			elm = this.GetElements("x" + infix + "_sysdate");
 			if (elm && !ew_CheckDateDef(elm.value))
 				return this.OnError(elm, "<?php echo ew_JsEncode2($minat_investasi->sysdate->FldErrMsg()) ?>");
@@ -1243,8 +1167,6 @@ fminat_investasiedit.ValidateRequired = false;
 <?php } ?>
 
 // Dynamic selection lists
-fminat_investasiedit.Lists["x_penanaman_modal"] = {"LinkField":"x_id_status","Ajax":true,"AutoFill":false,"DisplayFields":["x_status","","",""],"ParentFields":[],"ChildFields":[],"FilterFields":[],"Options":[],"Template":"","LinkTable":"status"};
-fminat_investasiedit.Lists["x_jenis_perusahaan"] = {"LinkField":"x_id_jp","Ajax":true,"AutoFill":false,"DisplayFields":["x_jenis_perusahaan","","",""],"ParentFields":[],"ChildFields":[],"FilterFields":[],"Options":[],"Template":"","LinkTable":"jenis_perusahaan"};
 fminat_investasiedit.Lists["x_id_jenis"] = {"LinkField":"x_id_jenis","Ajax":true,"AutoFill":false,"DisplayFields":["x_jenis","","",""],"ParentFields":[],"ChildFields":[],"FilterFields":[],"Options":[],"Template":"","LinkTable":"jenis"};
 fminat_investasiedit.Lists["x_id_kecamatan"] = {"LinkField":"x_id_kecamatan","Ajax":true,"AutoFill":false,"DisplayFields":["x_kecamatan","","",""],"ParentFields":[],"ChildFields":[],"FilterFields":[],"Options":[],"Template":"","LinkTable":"kecamatan"};
 
@@ -1282,6 +1204,32 @@ $minat_investasi_edit->ShowMessage();
 <?php echo $minat_investasi->id_minat_investasi->CustomMsg ?></div></div>
 	</div>
 <?php } ?>
+<?php if ($minat_investasi->id_jenis->Visible) { // id_jenis ?>
+	<div id="r_id_jenis" class="form-group">
+		<label id="elh_minat_investasi_id_jenis" for="x_id_jenis" class="col-sm-2 control-label ewLabel"><?php echo $minat_investasi->id_jenis->FldCaption() ?><?php echo $Language->Phrase("FieldRequiredIndicator") ?></label>
+		<div class="col-sm-10"><div<?php echo $minat_investasi->id_jenis->CellAttributes() ?>>
+<span id="el_minat_investasi_id_jenis">
+<select data-table="minat_investasi" data-field="x_id_jenis" data-value-separator="<?php echo $minat_investasi->id_jenis->DisplayValueSeparatorAttribute() ?>" id="x_id_jenis" name="x_id_jenis"<?php echo $minat_investasi->id_jenis->EditAttributes() ?>>
+<?php echo $minat_investasi->id_jenis->SelectOptionListHtml("x_id_jenis") ?>
+</select>
+<input type="hidden" name="s_x_id_jenis" id="s_x_id_jenis" value="<?php echo $minat_investasi->id_jenis->LookupFilterQuery() ?>">
+</span>
+<?php echo $minat_investasi->id_jenis->CustomMsg ?></div></div>
+	</div>
+<?php } ?>
+<?php if ($minat_investasi->id_kecamatan->Visible) { // id_kecamatan ?>
+	<div id="r_id_kecamatan" class="form-group">
+		<label id="elh_minat_investasi_id_kecamatan" for="x_id_kecamatan" class="col-sm-2 control-label ewLabel"><?php echo $minat_investasi->id_kecamatan->FldCaption() ?><?php echo $Language->Phrase("FieldRequiredIndicator") ?></label>
+		<div class="col-sm-10"><div<?php echo $minat_investasi->id_kecamatan->CellAttributes() ?>>
+<span id="el_minat_investasi_id_kecamatan">
+<select data-table="minat_investasi" data-field="x_id_kecamatan" data-value-separator="<?php echo $minat_investasi->id_kecamatan->DisplayValueSeparatorAttribute() ?>" id="x_id_kecamatan" name="x_id_kecamatan"<?php echo $minat_investasi->id_kecamatan->EditAttributes() ?>>
+<?php echo $minat_investasi->id_kecamatan->SelectOptionListHtml("x_id_kecamatan") ?>
+</select>
+<input type="hidden" name="s_x_id_kecamatan" id="s_x_id_kecamatan" value="<?php echo $minat_investasi->id_kecamatan->LookupFilterQuery() ?>">
+</span>
+<?php echo $minat_investasi->id_kecamatan->CustomMsg ?></div></div>
+	</div>
+<?php } ?>
 <?php if ($minat_investasi->nib->Visible) { // nib ?>
 	<div id="r_nib" class="form-group">
 		<label id="elh_minat_investasi_nib" for="x_nib" class="col-sm-2 control-label ewLabel"><?php echo $minat_investasi->nib->FldCaption() ?></label>
@@ -1307,10 +1255,7 @@ $minat_investasi_edit->ShowMessage();
 		<label id="elh_minat_investasi_penanaman_modal" for="x_penanaman_modal" class="col-sm-2 control-label ewLabel"><?php echo $minat_investasi->penanaman_modal->FldCaption() ?></label>
 		<div class="col-sm-10"><div<?php echo $minat_investasi->penanaman_modal->CellAttributes() ?>>
 <span id="el_minat_investasi_penanaman_modal">
-<select data-table="minat_investasi" data-field="x_penanaman_modal" data-value-separator="<?php echo $minat_investasi->penanaman_modal->DisplayValueSeparatorAttribute() ?>" id="x_penanaman_modal" name="x_penanaman_modal"<?php echo $minat_investasi->penanaman_modal->EditAttributes() ?>>
-<?php echo $minat_investasi->penanaman_modal->SelectOptionListHtml("x_penanaman_modal") ?>
-</select>
-<input type="hidden" name="s_x_penanaman_modal" id="s_x_penanaman_modal" value="<?php echo $minat_investasi->penanaman_modal->LookupFilterQuery() ?>">
+<input type="text" data-table="minat_investasi" data-field="x_penanaman_modal" name="x_penanaman_modal" id="x_penanaman_modal" size="30" placeholder="<?php echo ew_HtmlEncode($minat_investasi->penanaman_modal->getPlaceHolder()) ?>" value="<?php echo $minat_investasi->penanaman_modal->EditValue ?>"<?php echo $minat_investasi->penanaman_modal->EditAttributes() ?>>
 </span>
 <?php echo $minat_investasi->penanaman_modal->CustomMsg ?></div></div>
 	</div>
@@ -1320,38 +1265,9 @@ $minat_investasi_edit->ShowMessage();
 		<label id="elh_minat_investasi_jenis_perusahaan" for="x_jenis_perusahaan" class="col-sm-2 control-label ewLabel"><?php echo $minat_investasi->jenis_perusahaan->FldCaption() ?></label>
 		<div class="col-sm-10"><div<?php echo $minat_investasi->jenis_perusahaan->CellAttributes() ?>>
 <span id="el_minat_investasi_jenis_perusahaan">
-<select data-table="minat_investasi" data-field="x_jenis_perusahaan" data-value-separator="<?php echo $minat_investasi->jenis_perusahaan->DisplayValueSeparatorAttribute() ?>" id="x_jenis_perusahaan" name="x_jenis_perusahaan"<?php echo $minat_investasi->jenis_perusahaan->EditAttributes() ?>>
-<?php echo $minat_investasi->jenis_perusahaan->SelectOptionListHtml("x_jenis_perusahaan") ?>
-</select>
-<input type="hidden" name="s_x_jenis_perusahaan" id="s_x_jenis_perusahaan" value="<?php echo $minat_investasi->jenis_perusahaan->LookupFilterQuery() ?>">
+<input type="text" data-table="minat_investasi" data-field="x_jenis_perusahaan" name="x_jenis_perusahaan" id="x_jenis_perusahaan" size="30" placeholder="<?php echo ew_HtmlEncode($minat_investasi->jenis_perusahaan->getPlaceHolder()) ?>" value="<?php echo $minat_investasi->jenis_perusahaan->EditValue ?>"<?php echo $minat_investasi->jenis_perusahaan->EditAttributes() ?>>
 </span>
 <?php echo $minat_investasi->jenis_perusahaan->CustomMsg ?></div></div>
-	</div>
-<?php } ?>
-<?php if ($minat_investasi->id_jenis->Visible) { // id_jenis ?>
-	<div id="r_id_jenis" class="form-group">
-		<label id="elh_minat_investasi_id_jenis" for="x_id_jenis" class="col-sm-2 control-label ewLabel"><?php echo $minat_investasi->id_jenis->FldCaption() ?><?php echo $Language->Phrase("FieldRequiredIndicator") ?></label>
-		<div class="col-sm-10"><div<?php echo $minat_investasi->id_jenis->CellAttributes() ?>>
-<span id="el_minat_investasi_id_jenis">
-<select data-table="minat_investasi" data-field="x_id_jenis" data-value-separator="<?php echo $minat_investasi->id_jenis->DisplayValueSeparatorAttribute() ?>" id="x_id_jenis" name="x_id_jenis"<?php echo $minat_investasi->id_jenis->EditAttributes() ?>>
-<?php echo $minat_investasi->id_jenis->SelectOptionListHtml("x_id_jenis") ?>
-</select>
-<input type="hidden" name="s_x_id_jenis" id="s_x_id_jenis" value="<?php echo $minat_investasi->id_jenis->LookupFilterQuery() ?>">
-</span>
-<?php echo $minat_investasi->id_jenis->CustomMsg ?></div></div>
-	</div>
-<?php } ?>
-<?php if ($minat_investasi->id_kecamatan->Visible) { // id_kecamatan ?>
-	<div id="r_id_kecamatan" class="form-group">
-		<label id="elh_minat_investasi_id_kecamatan" for="x_id_kecamatan" class="col-sm-2 control-label ewLabel"><?php echo $minat_investasi->id_kecamatan->FldCaption() ?><?php echo $Language->Phrase("FieldRequiredIndicator") ?></label>
-		<div class="col-sm-10"><div<?php echo $minat_investasi->id_kecamatan->CellAttributes() ?>>
-<span id="el_minat_investasi_id_kecamatan">
-<select data-table="minat_investasi" data-field="x_id_kecamatan" data-value-separator="<?php echo $minat_investasi->id_kecamatan->DisplayValueSeparatorAttribute() ?>" id="x_id_kecamatan" name="x_id_kecamatan"<?php echo $minat_investasi->id_kecamatan->EditAttributes() ?>>
-<?php echo $minat_investasi->id_kecamatan->SelectOptionListHtml("x_id_kecamatan") ?>
-</select>
-<input type="hidden" name="s_x_id_kecamatan" id="s_x_id_kecamatan" value="<?php echo $minat_investasi->id_kecamatan->LookupFilterQuery() ?>">
-</span>
-<?php echo $minat_investasi->id_kecamatan->CustomMsg ?></div></div>
 	</div>
 <?php } ?>
 <?php if ($minat_investasi->sysdate->Visible) { // sysdate ?>

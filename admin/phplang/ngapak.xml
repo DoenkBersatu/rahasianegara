@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<ew-language date="2022/10/25" version="13.0.4" id="id" name="ngapak" desc="ngapak" author="Masino Sinaga">
+<ew-language date="2022/10/29" version="13.0.4" id="id" name="ngapak" desc="ngapak" author="Masino Sinaga">
   <global>
     <phrase id="addblankrow" value="Tambah Baris Kosong" class="fa fa-plus ewIcon" />
     <!-- v11 -->
@@ -574,12 +574,12 @@
     <!-- v2017 -->
   </global>
   <project>
-    <phrase id="footertext" value="&amp;copy;2016 e.World Technology Ltd. All rights reserved." />
+    <phrase id="footertext" value="DPMPTSP Kabupaten Garut" />
     <menu id="17">
-      <phrase id="menutext" value="status" />
+      <phrase id="menutext" value="jenis perusahaan" />
     </menu>
     <menu id="18">
-      <phrase id="menutext" value="jenis perusahaan" />
+      <phrase id="menutext" value="status" />
     </menu>
     <menu id="16">
       <phrase id="menutext" value="koneksi.php" />
@@ -647,23 +647,23 @@
       <field id="id_minat_investasi">
         <phrase id="fldcaption" value="id minat investasi" />
       </field>
-      <field id="nib">
-        <phrase id="fldcaption" value="NIB" />
-      </field>
-      <field id="nama">
-        <phrase id="fldcaption" value="Nama" />
-      </field>
-      <field id="penanaman_modal">
-        <phrase id="fldcaption" value="Penanaman Modal" />
-      </field>
-      <field id="jenis_perusahaan">
-        <phrase id="fldcaption" value="Jenis Perusahaan" />
-      </field>
       <field id="id_jenis">
         <phrase id="fldcaption" value="Jenis" />
       </field>
       <field id="id_kecamatan">
         <phrase id="fldcaption" value="Kecamatan" />
+      </field>
+      <field id="nib">
+        <phrase id="fldcaption" value="nib" />
+      </field>
+      <field id="nama">
+        <phrase id="fldcaption" value="nama" />
+      </field>
+      <field id="penanaman_modal">
+        <phrase id="fldcaption" value="penanaman modal" />
+      </field>
+      <field id="jenis_perusahaan">
+        <phrase id="fldcaption" value="jenis perusahaan" />
       </field>
       <field id="sysdate">
         <phrase id="fldcaption" value="sysdate" />
@@ -777,6 +777,13 @@
         <phrase id="fldcaption" value="userlevelname" />
       </field>
     </table>
+    <table id="form2dupload_php">
+      <phrase id="tblcaption" value="Upload Data Minat Investasi" />
+    </table>
+    <table id="upload_aksi_php" />
+    <table id="koneksi_php">
+      <phrase id="tblcaption" value="koneksi.php" />
+    </table>
     <table id="jenis_perusahaan">
       <phrase id="tblcaption" value="jenis perusahaan" />
       <field id="id_jp">
@@ -794,13 +801,6 @@
       <field id="status">
         <phrase id="fldcaption" value="status" />
       </field>
-    </table>
-    <table id="form2dupload_php">
-      <phrase id="tblcaption" value="Upload Data Minat Investasi" />
-    </table>
-    <table id="upload_aksi_php" />
-    <table id="koneksi_php">
-      <phrase id="tblcaption" value="koneksi.php" />
     </table>
   </project>
 </ew-language>

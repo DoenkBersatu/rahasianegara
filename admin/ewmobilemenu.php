@@ -3,6 +3,8 @@
 
 // Generate all menu items
 $RootMenu->IsRoot = TRUE;
+$RootMenu->AddMenuItem(17, "mmi_jenis_perusahaan", $Language->MenuPhrase("17", "MenuText"), "jenis_perusahaanlist.php", -1, "", AllowListMenu('{711D4B7A-499A-4AB9-B89B-D8472076C077}jenis_perusahaan'), FALSE, FALSE);
+$RootMenu->AddMenuItem(18, "mmi_status", $Language->MenuPhrase("18", "MenuText"), "statuslist.php", -1, "", AllowListMenu('{711D4B7A-499A-4AB9-B89B-D8472076C077}status'), FALSE, FALSE);
 $RootMenu->AddMenuItem(3, "mmi_minat_investasi", $Language->MenuPhrase("3", "MenuText"), "minat_investasilist.php", -1, "", AllowListMenu('{711D4B7A-499A-4AB9-B89B-D8472076C077}minat_investasi'), FALSE, FALSE);
 $RootMenu->AddMenuItem(14, "mmi_form2Dupload_php", $Language->MenuPhrase("14", "MenuText"), "form-upload.php", -1, "", AllowListMenu('{711D4B7A-499A-4AB9-B89B-D8472076C077}form-upload.php'), FALSE, TRUE);
 $RootMenu->AddMenuItem(4, "mmi_penyerapan_tk", $Language->MenuPhrase("4", "MenuText"), "penyerapan_tklist.php", -1, "", AllowListMenu('{711D4B7A-499A-4AB9-B89B-D8472076C077}penyerapan_tk'), FALSE, FALSE);

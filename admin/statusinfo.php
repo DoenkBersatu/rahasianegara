@@ -1,20 +1,14 @@
 <?php
 
 // Global variable for table object
-$minat_investasi = NULL;
+$status = NULL;
 
 //
-// Table class for minat_investasi
+// Table class for status
 //
-class cminat_investasi extends cTable {
-	var $id_minat_investasi;
-	var $id_jenis;
-	var $id_kecamatan;
-	var $nib;
-	var $nama;
-	var $penanaman_modal;
-	var $jenis_perusahaan;
-	var $sysdate;
+class cstatus extends cTable {
+	var $id_status;
+	var $status;
 
 	//
 	// Table class constructor
@@ -24,12 +18,12 @@ class cminat_investasi extends cTable {
 
 		// Language object
 		if (!isset($Language)) $Language = new cLanguage();
-		$this->TableVar = 'minat_investasi';
-		$this->TableName = 'minat_investasi';
+		$this->TableVar = 'status';
+		$this->TableName = 'status';
 		$this->TableType = 'TABLE';
 
 		// Update Table
-		$this->UpdateTable = "`minat_investasi`";
+		$this->UpdateTable = "`status`";
 		$this->DBID = 'DB';
 		$this->ExportAll = TRUE;
 		$this->ExportPageBreakCount = 0; // Page break per every n record (PDF only)
@@ -46,55 +40,16 @@ class cminat_investasi extends cTable {
 		$this->UserIDAllowSecurity = 0; // User ID Allow
 		$this->BasicSearch = new cBasicSearch($this->TableVar);
 
-		// id_minat_investasi
-		$this->id_minat_investasi = new cField('minat_investasi', 'minat_investasi', 'x_id_minat_investasi', 'id_minat_investasi', '`id_minat_investasi`', '`id_minat_investasi`', 3, -1, FALSE, '`id_minat_investasi`', FALSE, FALSE, FALSE, 'FORMATTED TEXT', 'NO');
-		$this->id_minat_investasi->Sortable = TRUE; // Allow sort
-		$this->id_minat_investasi->FldDefaultErrMsg = $Language->Phrase("IncorrectInteger");
-		$this->fields['id_minat_investasi'] = &$this->id_minat_investasi;
+		// id_status
+		$this->id_status = new cField('status', 'status', 'x_id_status', 'id_status', '`id_status`', '`id_status`', 3, -1, FALSE, '`id_status`', FALSE, FALSE, FALSE, 'FORMATTED TEXT', 'NO');
+		$this->id_status->Sortable = TRUE; // Allow sort
+		$this->id_status->FldDefaultErrMsg = $Language->Phrase("IncorrectInteger");
+		$this->fields['id_status'] = &$this->id_status;
 
-		// id_jenis
-		$this->id_jenis = new cField('minat_investasi', 'minat_investasi', 'x_id_jenis', 'id_jenis', '`id_jenis`', '`id_jenis`', 3, -1, FALSE, '`id_jenis`', FALSE, FALSE, FALSE, 'FORMATTED TEXT', 'SELECT');
-		$this->id_jenis->Sortable = TRUE; // Allow sort
-		$this->id_jenis->UsePleaseSelect = TRUE; // Use PleaseSelect by default
-		$this->id_jenis->PleaseSelectText = $Language->Phrase("PleaseSelect"); // PleaseSelect text
-		$this->id_jenis->FldDefaultErrMsg = $Language->Phrase("IncorrectInteger");
-		$this->fields['id_jenis'] = &$this->id_jenis;
-
-		// id_kecamatan
-		$this->id_kecamatan = new cField('minat_investasi', 'minat_investasi', 'x_id_kecamatan', 'id_kecamatan', '`id_kecamatan`', '`id_kecamatan`', 3, -1, FALSE, '`id_kecamatan`', FALSE, FALSE, FALSE, 'FORMATTED TEXT', 'SELECT');
-		$this->id_kecamatan->Sortable = TRUE; // Allow sort
-		$this->id_kecamatan->UsePleaseSelect = TRUE; // Use PleaseSelect by default
-		$this->id_kecamatan->PleaseSelectText = $Language->Phrase("PleaseSelect"); // PleaseSelect text
-		$this->id_kecamatan->FldDefaultErrMsg = $Language->Phrase("IncorrectInteger");
-		$this->fields['id_kecamatan'] = &$this->id_kecamatan;
-
-		// nib
-		$this->nib = new cField('minat_investasi', 'minat_investasi', 'x_nib', 'nib', '`nib`', '`nib`', 200, -1, FALSE, '`nib`', FALSE, FALSE, FALSE, 'FORMATTED TEXT', 'TEXT');
-		$this->nib->Sortable = TRUE; // Allow sort
-		$this->fields['nib'] = &$this->nib;
-
-		// nama
-		$this->nama = new cField('minat_investasi', 'minat_investasi', 'x_nama', 'nama', '`nama`', '`nama`', 200, -1, FALSE, '`nama`', FALSE, FALSE, FALSE, 'FORMATTED TEXT', 'TEXT');
-		$this->nama->Sortable = TRUE; // Allow sort
-		$this->fields['nama'] = &$this->nama;
-
-		// penanaman_modal
-		$this->penanaman_modal = new cField('minat_investasi', 'minat_investasi', 'x_penanaman_modal', 'penanaman_modal', '`penanaman_modal`', '`penanaman_modal`', 3, -1, FALSE, '`penanaman_modal`', FALSE, FALSE, FALSE, 'FORMATTED TEXT', 'TEXT');
-		$this->penanaman_modal->Sortable = TRUE; // Allow sort
-		$this->penanaman_modal->FldDefaultErrMsg = $Language->Phrase("IncorrectInteger");
-		$this->fields['penanaman_modal'] = &$this->penanaman_modal;
-
-		// jenis_perusahaan
-		$this->jenis_perusahaan = new cField('minat_investasi', 'minat_investasi', 'x_jenis_perusahaan', 'jenis_perusahaan', '`jenis_perusahaan`', '`jenis_perusahaan`', 3, -1, FALSE, '`jenis_perusahaan`', FALSE, FALSE, FALSE, 'FORMATTED TEXT', 'TEXT');
-		$this->jenis_perusahaan->Sortable = TRUE; // Allow sort
-		$this->jenis_perusahaan->FldDefaultErrMsg = $Language->Phrase("IncorrectInteger");
-		$this->fields['jenis_perusahaan'] = &$this->jenis_perusahaan;
-
-		// sysdate
-		$this->sysdate = new cField('minat_investasi', 'minat_investasi', 'x_sysdate', 'sysdate', '`sysdate`', ew_CastDateFieldForLike('`sysdate`', 0, "DB"), 135, 0, FALSE, '`sysdate`', FALSE, FALSE, FALSE, 'FORMATTED TEXT', 'TEXT');
-		$this->sysdate->Sortable = TRUE; // Allow sort
-		$this->sysdate->FldDefaultErrMsg = str_replace("%s", $GLOBALS["EW_DATE_FORMAT"], $Language->Phrase("IncorrectDate"));
-		$this->fields['sysdate'] = &$this->sysdate;
+		// status
+		$this->status = new cField('status', 'status', 'x_status', 'status', '`status`', '`status`', 200, -1, FALSE, '`status`', FALSE, FALSE, FALSE, 'FORMATTED TEXT', 'TEXT');
+		$this->status->Sortable = TRUE; // Allow sort
+		$this->fields['status'] = &$this->status;
 	}
 
 	// Set Field Visibility
@@ -124,7 +79,7 @@ class cminat_investasi extends cTable {
 	var $_SqlFrom = "";
 
 	function getSqlFrom() { // From
-		return ($this->_SqlFrom <> "") ? $this->_SqlFrom : "`minat_investasi`";
+		return ($this->_SqlFrom <> "") ? $this->_SqlFrom : "`status`";
 	}
 
 	function SqlFrom() { // For backward compatibility
@@ -347,8 +302,8 @@ class cminat_investasi extends cTable {
 		if ($bInsert) {
 
 			// Get insert id if necessary
-			$this->id_minat_investasi->setDbValue($conn->Insert_ID());
-			$rs['id_minat_investasi'] = $this->id_minat_investasi->DbValue;
+			$this->id_status->setDbValue($conn->Insert_ID());
+			$rs['id_status'] = $this->id_status->DbValue;
 		}
 		return $bInsert;
 	}
@@ -385,8 +340,8 @@ class cminat_investasi extends cTable {
 		if (is_array($where))
 			$where = $this->ArrayToFilter($where);
 		if ($rs) {
-			if (array_key_exists('id_minat_investasi', $rs))
-				ew_AddFilter($where, ew_QuotedName('id_minat_investasi', $this->DBID) . '=' . ew_QuotedValue($rs['id_minat_investasi'], $this->id_minat_investasi->FldDataType, $this->DBID));
+			if (array_key_exists('id_status', $rs))
+				ew_AddFilter($where, ew_QuotedName('id_status', $this->DBID) . '=' . ew_QuotedValue($rs['id_status'], $this->id_status->FldDataType, $this->DBID));
 		}
 		$filter = ($curfilter) ? $this->CurrentFilter : "";
 		ew_AddFilter($filter, $where);
@@ -406,15 +361,15 @@ class cminat_investasi extends cTable {
 
 	// Key filter WHERE clause
 	function SqlKeyFilter() {
-		return "`id_minat_investasi` = @id_minat_investasi@";
+		return "`id_status` = @id_status@";
 	}
 
 	// Key filter
 	function KeyFilter() {
 		$sKeyFilter = $this->SqlKeyFilter();
-		if (!is_numeric($this->id_minat_investasi->CurrentValue))
+		if (!is_numeric($this->id_status->CurrentValue))
 			$sKeyFilter = "0=1"; // Invalid key
-		$sKeyFilter = str_replace("@id_minat_investasi@", ew_AdjustSql($this->id_minat_investasi->CurrentValue, $this->DBID), $sKeyFilter); // Replace key value
+		$sKeyFilter = str_replace("@id_status@", ew_AdjustSql($this->id_status->CurrentValue, $this->DBID), $sKeyFilter); // Replace key value
 		return $sKeyFilter;
 	}
 
@@ -428,7 +383,7 @@ class cminat_investasi extends cTable {
 		if (@$_SESSION[$name] <> "") {
 			return $_SESSION[$name];
 		} else {
-			return "minat_investasilist.php";
+			return "statuslist.php";
 		}
 	}
 
@@ -438,30 +393,30 @@ class cminat_investasi extends cTable {
 
 	// List URL
 	function GetListUrl() {
-		return "minat_investasilist.php";
+		return "statuslist.php";
 	}
 
 	// View URL
 	function GetViewUrl($parm = "") {
 		if ($parm <> "")
-			$url = $this->KeyUrl("minat_investasiview.php", $this->UrlParm($parm));
+			$url = $this->KeyUrl("statusview.php", $this->UrlParm($parm));
 		else
-			$url = $this->KeyUrl("minat_investasiview.php", $this->UrlParm(EW_TABLE_SHOW_DETAIL . "="));
+			$url = $this->KeyUrl("statusview.php", $this->UrlParm(EW_TABLE_SHOW_DETAIL . "="));
 		return $this->AddMasterUrl($url);
 	}
 
 	// Add URL
 	function GetAddUrl($parm = "") {
 		if ($parm <> "")
-			$url = "minat_investasiadd.php?" . $this->UrlParm($parm);
+			$url = "statusadd.php?" . $this->UrlParm($parm);
 		else
-			$url = "minat_investasiadd.php";
+			$url = "statusadd.php";
 		return $this->AddMasterUrl($url);
 	}
 
 	// Edit URL
 	function GetEditUrl($parm = "") {
-		$url = $this->KeyUrl("minat_investasiedit.php", $this->UrlParm($parm));
+		$url = $this->KeyUrl("statusedit.php", $this->UrlParm($parm));
 		return $this->AddMasterUrl($url);
 	}
 
@@ -473,7 +428,7 @@ class cminat_investasi extends cTable {
 
 	// Copy URL
 	function GetCopyUrl($parm = "") {
-		$url = $this->KeyUrl("minat_investasiadd.php", $this->UrlParm($parm));
+		$url = $this->KeyUrl("statusadd.php", $this->UrlParm($parm));
 		return $this->AddMasterUrl($url);
 	}
 
@@ -485,7 +440,7 @@ class cminat_investasi extends cTable {
 
 	// Delete URL
 	function GetDeleteUrl() {
-		return $this->KeyUrl("minat_investasidelete.php", $this->UrlParm());
+		return $this->KeyUrl("statusdelete.php", $this->UrlParm());
 	}
 
 	// Add master url
@@ -495,7 +450,7 @@ class cminat_investasi extends cTable {
 
 	function KeyToJson() {
 		$json = "";
-		$json .= "id_minat_investasi:" . ew_VarToJson($this->id_minat_investasi->CurrentValue, "number", "'");
+		$json .= "id_status:" . ew_VarToJson($this->id_status->CurrentValue, "number", "'");
 		return "{" . $json . "}";
 	}
 
@@ -503,8 +458,8 @@ class cminat_investasi extends cTable {
 	function KeyUrl($url, $parm = "") {
 		$sUrl = $url . "?";
 		if ($parm <> "") $sUrl .= $parm . "&";
-		if (!is_null($this->id_minat_investasi->CurrentValue)) {
-			$sUrl .= "id_minat_investasi=" . urlencode($this->id_minat_investasi->CurrentValue);
+		if (!is_null($this->id_status->CurrentValue)) {
+			$sUrl .= "id_status=" . urlencode($this->id_status->CurrentValue);
 		} else {
 			return "javascript:ew_Alert(ewLanguage.Phrase('InvalidRecord'));";
 		}
@@ -537,10 +492,10 @@ class cminat_investasi extends cTable {
 			$cnt = count($arKeys);
 		} elseif (!empty($_GET) || !empty($_POST)) {
 			$isPost = ew_IsHttpPost();
-			if ($isPost && isset($_POST["id_minat_investasi"]))
-				$arKeys[] = ew_StripSlashes($_POST["id_minat_investasi"]);
-			elseif (isset($_GET["id_minat_investasi"]))
-				$arKeys[] = ew_StripSlashes($_GET["id_minat_investasi"]);
+			if ($isPost && isset($_POST["id_status"]))
+				$arKeys[] = ew_StripSlashes($_POST["id_status"]);
+			elseif (isset($_GET["id_status"]))
+				$arKeys[] = ew_StripSlashes($_GET["id_status"]);
 			else
 				$arKeys = NULL; // Do not setup
 
@@ -565,7 +520,7 @@ class cminat_investasi extends cTable {
 		$sKeyFilter = "";
 		foreach ($arKeys as $key) {
 			if ($sKeyFilter <> "") $sKeyFilter .= " OR ";
-			$this->id_minat_investasi->CurrentValue = $key;
+			$this->id_status->CurrentValue = $key;
 			$sKeyFilter .= "(" . $this->KeyFilter() . ")";
 		}
 		return $sKeyFilter;
@@ -586,14 +541,8 @@ class cminat_investasi extends cTable {
 
 	// Load row values from recordset
 	function LoadListRowValues(&$rs) {
-		$this->id_minat_investasi->setDbValue($rs->fields('id_minat_investasi'));
-		$this->id_jenis->setDbValue($rs->fields('id_jenis'));
-		$this->id_kecamatan->setDbValue($rs->fields('id_kecamatan'));
-		$this->nib->setDbValue($rs->fields('nib'));
-		$this->nama->setDbValue($rs->fields('nama'));
-		$this->penanaman_modal->setDbValue($rs->fields('penanaman_modal'));
-		$this->jenis_perusahaan->setDbValue($rs->fields('jenis_perusahaan'));
-		$this->sysdate->setDbValue($rs->fields('sysdate'));
+		$this->id_status->setDbValue($rs->fields('id_status'));
+		$this->status->setDbValue($rs->fields('status'));
 	}
 
 	// Render list row values
@@ -604,125 +553,26 @@ class cminat_investasi extends cTable {
 		$this->Row_Rendering();
 
    // Common render codes
-		// id_minat_investasi
-		// id_jenis
-		// id_kecamatan
-		// nib
-		// nama
-		// penanaman_modal
-		// jenis_perusahaan
-		// sysdate
-		// id_minat_investasi
+		// id_status
+		// status
+		// id_status
 
-		$this->id_minat_investasi->ViewValue = $this->id_minat_investasi->CurrentValue;
-		$this->id_minat_investasi->ViewCustomAttributes = "";
+		$this->id_status->ViewValue = $this->id_status->CurrentValue;
+		$this->id_status->ViewCustomAttributes = "";
 
-		// id_jenis
-		if (strval($this->id_jenis->CurrentValue) <> "") {
-			$sFilterWrk = "`id_jenis`" . ew_SearchString("=", $this->id_jenis->CurrentValue, EW_DATATYPE_NUMBER, "");
-		$sSqlWrk = "SELECT `id_jenis`, `jenis` AS `DispFld`, '' AS `Disp2Fld`, '' AS `Disp3Fld`, '' AS `Disp4Fld` FROM `jenis`";
-		$sWhereWrk = "";
-		$this->id_jenis->LookupFilters = array();
-		ew_AddFilter($sWhereWrk, $sFilterWrk);
-		$this->Lookup_Selecting($this->id_jenis, $sWhereWrk); // Call Lookup selecting
-		if ($sWhereWrk <> "") $sSqlWrk .= " WHERE " . $sWhereWrk;
-			$rswrk = Conn()->Execute($sSqlWrk);
-			if ($rswrk && !$rswrk->EOF) { // Lookup values found
-				$arwrk = array();
-				$arwrk[1] = $rswrk->fields('DispFld');
-				$this->id_jenis->ViewValue = $this->id_jenis->DisplayValue($arwrk);
-				$rswrk->Close();
-			} else {
-				$this->id_jenis->ViewValue = $this->id_jenis->CurrentValue;
-			}
-		} else {
-			$this->id_jenis->ViewValue = NULL;
-		}
-		$this->id_jenis->ViewCustomAttributes = "";
+		// status
+		$this->status->ViewValue = $this->status->CurrentValue;
+		$this->status->ViewCustomAttributes = "";
 
-		// id_kecamatan
-		if (strval($this->id_kecamatan->CurrentValue) <> "") {
-			$sFilterWrk = "`id_kecamatan`" . ew_SearchString("=", $this->id_kecamatan->CurrentValue, EW_DATATYPE_NUMBER, "");
-		$sSqlWrk = "SELECT `id_kecamatan`, `kecamatan` AS `DispFld`, '' AS `Disp2Fld`, '' AS `Disp3Fld`, '' AS `Disp4Fld` FROM `kecamatan`";
-		$sWhereWrk = "";
-		$this->id_kecamatan->LookupFilters = array();
-		ew_AddFilter($sWhereWrk, $sFilterWrk);
-		$this->Lookup_Selecting($this->id_kecamatan, $sWhereWrk); // Call Lookup selecting
-		if ($sWhereWrk <> "") $sSqlWrk .= " WHERE " . $sWhereWrk;
-			$rswrk = Conn()->Execute($sSqlWrk);
-			if ($rswrk && !$rswrk->EOF) { // Lookup values found
-				$arwrk = array();
-				$arwrk[1] = $rswrk->fields('DispFld');
-				$this->id_kecamatan->ViewValue = $this->id_kecamatan->DisplayValue($arwrk);
-				$rswrk->Close();
-			} else {
-				$this->id_kecamatan->ViewValue = $this->id_kecamatan->CurrentValue;
-			}
-		} else {
-			$this->id_kecamatan->ViewValue = NULL;
-		}
-		$this->id_kecamatan->ViewCustomAttributes = "";
+		// id_status
+		$this->id_status->LinkCustomAttributes = "";
+		$this->id_status->HrefValue = "";
+		$this->id_status->TooltipValue = "";
 
-		// nib
-		$this->nib->ViewValue = $this->nib->CurrentValue;
-		$this->nib->ViewCustomAttributes = "";
-
-		// nama
-		$this->nama->ViewValue = $this->nama->CurrentValue;
-		$this->nama->ViewCustomAttributes = "";
-
-		// penanaman_modal
-		$this->penanaman_modal->ViewValue = $this->penanaman_modal->CurrentValue;
-		$this->penanaman_modal->ViewCustomAttributes = "";
-
-		// jenis_perusahaan
-		$this->jenis_perusahaan->ViewValue = $this->jenis_perusahaan->CurrentValue;
-		$this->jenis_perusahaan->ViewCustomAttributes = "";
-
-		// sysdate
-		$this->sysdate->ViewValue = $this->sysdate->CurrentValue;
-		$this->sysdate->ViewValue = ew_FormatDateTime($this->sysdate->ViewValue, 0);
-		$this->sysdate->ViewCustomAttributes = "";
-
-		// id_minat_investasi
-		$this->id_minat_investasi->LinkCustomAttributes = "";
-		$this->id_minat_investasi->HrefValue = "";
-		$this->id_minat_investasi->TooltipValue = "";
-
-		// id_jenis
-		$this->id_jenis->LinkCustomAttributes = "";
-		$this->id_jenis->HrefValue = "";
-		$this->id_jenis->TooltipValue = "";
-
-		// id_kecamatan
-		$this->id_kecamatan->LinkCustomAttributes = "";
-		$this->id_kecamatan->HrefValue = "";
-		$this->id_kecamatan->TooltipValue = "";
-
-		// nib
-		$this->nib->LinkCustomAttributes = "";
-		$this->nib->HrefValue = "";
-		$this->nib->TooltipValue = "";
-
-		// nama
-		$this->nama->LinkCustomAttributes = "";
-		$this->nama->HrefValue = "";
-		$this->nama->TooltipValue = "";
-
-		// penanaman_modal
-		$this->penanaman_modal->LinkCustomAttributes = "";
-		$this->penanaman_modal->HrefValue = "";
-		$this->penanaman_modal->TooltipValue = "";
-
-		// jenis_perusahaan
-		$this->jenis_perusahaan->LinkCustomAttributes = "";
-		$this->jenis_perusahaan->HrefValue = "";
-		$this->jenis_perusahaan->TooltipValue = "";
-
-		// sysdate
-		$this->sysdate->LinkCustomAttributes = "";
-		$this->sysdate->HrefValue = "";
-		$this->sysdate->TooltipValue = "";
+		// status
+		$this->status->LinkCustomAttributes = "";
+		$this->status->HrefValue = "";
+		$this->status->TooltipValue = "";
 
 		// Call Row Rendered event
 		$this->Row_Rendered();
@@ -735,49 +585,17 @@ class cminat_investasi extends cTable {
 		// Call Row Rendering event
 		$this->Row_Rendering();
 
-		// id_minat_investasi
-		$this->id_minat_investasi->EditAttrs["class"] = "form-control";
-		$this->id_minat_investasi->EditCustomAttributes = "";
-		$this->id_minat_investasi->EditValue = $this->id_minat_investasi->CurrentValue;
-		$this->id_minat_investasi->ViewCustomAttributes = "";
+		// id_status
+		$this->id_status->EditAttrs["class"] = "form-control";
+		$this->id_status->EditCustomAttributes = "";
+		$this->id_status->EditValue = $this->id_status->CurrentValue;
+		$this->id_status->ViewCustomAttributes = "";
 
-		// id_jenis
-		$this->id_jenis->EditAttrs["class"] = "form-control";
-		$this->id_jenis->EditCustomAttributes = "";
-
-		// id_kecamatan
-		$this->id_kecamatan->EditAttrs["class"] = "form-control";
-		$this->id_kecamatan->EditCustomAttributes = "";
-
-		// nib
-		$this->nib->EditAttrs["class"] = "form-control";
-		$this->nib->EditCustomAttributes = "";
-		$this->nib->EditValue = $this->nib->CurrentValue;
-		$this->nib->PlaceHolder = ew_RemoveHtml($this->nib->FldCaption());
-
-		// nama
-		$this->nama->EditAttrs["class"] = "form-control";
-		$this->nama->EditCustomAttributes = "";
-		$this->nama->EditValue = $this->nama->CurrentValue;
-		$this->nama->PlaceHolder = ew_RemoveHtml($this->nama->FldCaption());
-
-		// penanaman_modal
-		$this->penanaman_modal->EditAttrs["class"] = "form-control";
-		$this->penanaman_modal->EditCustomAttributes = "";
-		$this->penanaman_modal->EditValue = $this->penanaman_modal->CurrentValue;
-		$this->penanaman_modal->PlaceHolder = ew_RemoveHtml($this->penanaman_modal->FldCaption());
-
-		// jenis_perusahaan
-		$this->jenis_perusahaan->EditAttrs["class"] = "form-control";
-		$this->jenis_perusahaan->EditCustomAttributes = "";
-		$this->jenis_perusahaan->EditValue = $this->jenis_perusahaan->CurrentValue;
-		$this->jenis_perusahaan->PlaceHolder = ew_RemoveHtml($this->jenis_perusahaan->FldCaption());
-
-		// sysdate
-		$this->sysdate->EditAttrs["class"] = "form-control";
-		$this->sysdate->EditCustomAttributes = "";
-		$this->sysdate->EditValue = ew_FormatDateTime($this->sysdate->CurrentValue, 8);
-		$this->sysdate->PlaceHolder = ew_RemoveHtml($this->sysdate->FldCaption());
+		// status
+		$this->status->EditAttrs["class"] = "form-control";
+		$this->status->EditCustomAttributes = "";
+		$this->status->EditValue = $this->status->CurrentValue;
+		$this->status->PlaceHolder = ew_RemoveHtml($this->status->FldCaption());
 
 		// Call Row Rendered event
 		$this->Row_Rendered();
@@ -806,23 +624,11 @@ class cminat_investasi extends cTable {
 			if ($Doc->Horizontal) { // Horizontal format, write header
 				$Doc->BeginExportRow();
 				if ($ExportPageType == "view") {
-					if ($this->id_minat_investasi->Exportable) $Doc->ExportCaption($this->id_minat_investasi);
-					if ($this->id_jenis->Exportable) $Doc->ExportCaption($this->id_jenis);
-					if ($this->id_kecamatan->Exportable) $Doc->ExportCaption($this->id_kecamatan);
-					if ($this->nib->Exportable) $Doc->ExportCaption($this->nib);
-					if ($this->nama->Exportable) $Doc->ExportCaption($this->nama);
-					if ($this->penanaman_modal->Exportable) $Doc->ExportCaption($this->penanaman_modal);
-					if ($this->jenis_perusahaan->Exportable) $Doc->ExportCaption($this->jenis_perusahaan);
-					if ($this->sysdate->Exportable) $Doc->ExportCaption($this->sysdate);
+					if ($this->id_status->Exportable) $Doc->ExportCaption($this->id_status);
+					if ($this->status->Exportable) $Doc->ExportCaption($this->status);
 				} else {
-					if ($this->id_minat_investasi->Exportable) $Doc->ExportCaption($this->id_minat_investasi);
-					if ($this->id_jenis->Exportable) $Doc->ExportCaption($this->id_jenis);
-					if ($this->id_kecamatan->Exportable) $Doc->ExportCaption($this->id_kecamatan);
-					if ($this->nib->Exportable) $Doc->ExportCaption($this->nib);
-					if ($this->nama->Exportable) $Doc->ExportCaption($this->nama);
-					if ($this->penanaman_modal->Exportable) $Doc->ExportCaption($this->penanaman_modal);
-					if ($this->jenis_perusahaan->Exportable) $Doc->ExportCaption($this->jenis_perusahaan);
-					if ($this->sysdate->Exportable) $Doc->ExportCaption($this->sysdate);
+					if ($this->id_status->Exportable) $Doc->ExportCaption($this->id_status);
+					if ($this->status->Exportable) $Doc->ExportCaption($this->status);
 				}
 				$Doc->EndExportRow();
 			}
@@ -854,23 +660,11 @@ class cminat_investasi extends cTable {
 				if (!$Doc->ExportCustom) {
 					$Doc->BeginExportRow($RowCnt); // Allow CSS styles if enabled
 					if ($ExportPageType == "view") {
-						if ($this->id_minat_investasi->Exportable) $Doc->ExportField($this->id_minat_investasi);
-						if ($this->id_jenis->Exportable) $Doc->ExportField($this->id_jenis);
-						if ($this->id_kecamatan->Exportable) $Doc->ExportField($this->id_kecamatan);
-						if ($this->nib->Exportable) $Doc->ExportField($this->nib);
-						if ($this->nama->Exportable) $Doc->ExportField($this->nama);
-						if ($this->penanaman_modal->Exportable) $Doc->ExportField($this->penanaman_modal);
-						if ($this->jenis_perusahaan->Exportable) $Doc->ExportField($this->jenis_perusahaan);
-						if ($this->sysdate->Exportable) $Doc->ExportField($this->sysdate);
+						if ($this->id_status->Exportable) $Doc->ExportField($this->id_status);
+						if ($this->status->Exportable) $Doc->ExportField($this->status);
 					} else {
-						if ($this->id_minat_investasi->Exportable) $Doc->ExportField($this->id_minat_investasi);
-						if ($this->id_jenis->Exportable) $Doc->ExportField($this->id_jenis);
-						if ($this->id_kecamatan->Exportable) $Doc->ExportField($this->id_kecamatan);
-						if ($this->nib->Exportable) $Doc->ExportField($this->nib);
-						if ($this->nama->Exportable) $Doc->ExportField($this->nama);
-						if ($this->penanaman_modal->Exportable) $Doc->ExportField($this->penanaman_modal);
-						if ($this->jenis_perusahaan->Exportable) $Doc->ExportField($this->jenis_perusahaan);
-						if ($this->sysdate->Exportable) $Doc->ExportField($this->sysdate);
+						if ($this->id_status->Exportable) $Doc->ExportField($this->id_status);
+						if ($this->status->Exportable) $Doc->ExportField($this->status);
 					}
 					$Doc->EndExportRow();
 				}

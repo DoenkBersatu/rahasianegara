@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 25 Okt 2022 pada 09.37
+-- Waktu pembuatan: 29 Okt 2022 pada 07.52
 -- Versi server: 10.1.34-MariaDB
 -- Versi PHP: 5.6.37
 
@@ -60,7 +60,16 @@ INSERT INTO `jenis_perusahaan` (`id_jp`, `jenis_perusahaan`) VALUES
 (1, 'Perorangan'),
 (2, 'PT'),
 (3, 'PT Perorangan'),
-(4, 'CV');
+(4, 'CV'),
+(5, 'Firma'),
+(6, 'Persekutuan Perdata'),
+(7, 'Koperasi'),
+(8, 'Persyarikatan atau Perkumpulan'),
+(9, 'Yayasan'),
+(10, 'Perusahaan Umum (Perum)'),
+(11, 'Perusahaan Umum Daerah (Perumda)'),
+(12, 'Badan Layanan Umum'),
+(13, 'Badan Hukum Lainnya');
 
 -- --------------------------------------------------------
 
@@ -147,7 +156,7 @@ INSERT INTO `minat_investasi` (`id_minat_investasi`, `nib`, `nama`, `penanaman_m
 (2, '8120107712662', 'SARI SARI', 1, 1, 20, 1, '2022-10-25 14:32:11'),
 (3, '8120004850964', 'SAMPURNA', 1, 1, 20, 1, '2022-10-25 14:32:11'),
 (4, '8120202830396', 'PD SINAR JAYA', 1, 1, 20, 1, '2022-10-25 14:32:11'),
-(5, '8120003851659', 'PD JAYA SENTOSA', 1, 1, 18, 1, '2022-10-25 14:32:11');
+(5, '8120003851659', 'PD JAYA SENTOSA', 1, 1, 18, 2, '2022-10-25 14:32:11');
 
 -- --------------------------------------------------------
 
@@ -176,6 +185,16 @@ CREATE TABLE `realisasi_investasi` (
   `id_subsektor` int(11) NOT NULL,
   `jumlah_investasi` bigint(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `realisasi_investasi`
+--
+
+INSERT INTO `realisasi_investasi` (`id_realisasi_investasi`, `id_triwulan`, `id_sektor`, `id_subsektor`, `jumlah_investasi`) VALUES
+(1, 5, 1, 1, 123456),
+(2, 6, 1, 1, 456321),
+(3, 7, 1, 1, 342515),
+(4, 8, 0, 0, 234543);
 
 -- --------------------------------------------------------
 
@@ -463,7 +482,7 @@ ALTER TABLE `jenis`
 -- AUTO_INCREMENT untuk tabel `jenis_perusahaan`
 --
 ALTER TABLE `jenis_perusahaan`
-  MODIFY `id_jp` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_jp` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT untuk tabel `kecamatan`
@@ -487,7 +506,7 @@ ALTER TABLE `penyerapan_tk`
 -- AUTO_INCREMENT untuk tabel `realisasi_investasi`
 --
 ALTER TABLE `realisasi_investasi`
-  MODIFY `id_realisasi_investasi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_realisasi_investasi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT untuk tabel `sektor`
